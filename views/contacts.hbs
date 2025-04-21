@@ -1,0 +1,120 @@
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>Контакты</h1>
+        <p>Свяжитесь с нами любым удобным способом</p>
+    </div>
+</section>
+
+<!-- Contact Info -->
+<section class="contact-info">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Адрес</h3>
+                <p>Санкт-Петербург, ул. Зоологическая, 10</p>
+                <p>Ежедневно с 10:00 до 20:00</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Телефон</h3>
+                <p>+7 (812) 123-45-67</p>
+                <p>Ежедневно с 9:00 до 21:00</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email</h3>
+                <p>info@dvakholma.ru</p>
+                <p>Ответ в течение 24 часов</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Соцсети</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section class="contact-form">
+    <div class="container">
+        <h2 class="section-title">Напишите нам</h2>
+        <form id="contactForm" class="form">
+            <div class="form-group">
+                <label for="name">Ваше имя</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Тема</label>
+                <select id="subject" name="subject">
+                    <option value="consultation">Консультация по животным</option>
+                    <option value="order">Заказ животного</option>
+                    <option value="vet">Ветеринарные услуги</option>
+                    <option value="other">Другое</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Сообщение</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+</section>
+
+<!-- Map -->
+<section class="map-section">
+    <div class="container">
+        <h2 class="section-title">Как нас найти</h2>
+        <div class="map-container">
+            <img src="pics/memes/il-cacto-hippopotamo.jpeg" alt="Карта" style="width: 100%; height: 400px; object-fit: cover;">
+        </div>
+    </div>
+</section>
+
+{{#contentFor 'scripts'}}
+<script>
+    // Добавляем активный класс для текущей страницы
+    $(document).ready(function() {
+        $('.main-menu a[href="/contacts"]').addClass('active');
+        
+        // Валидация и отправка формы (только для демонстрации)
+        $('#contactForm').on('submit', function(e) {
+            e.preventDefault();
+            alert('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+    });
+</script>
+{{/contentFor}} 

@@ -1,0 +1,16 @@
+<div class="animal-card">
+    <div class="animal-image">
+        <img src="{{image}}" alt="{{name}}">
+    </div>
+    <div class="animal-details">
+        <h3>{{name}}</h3>
+        <p class="description">{{description}}</p>
+        {{#if price}}
+        <div class="animal-meta">
+            <div class="price">{{price}} ₽</div>
+            {{#if size}}<div class="size">Размер: {{size}}</div>{{/if}}
+            {{#if lifespan}}<div class="lifespan">Продолжительность жизни: {{lifespan}}</div>{{/if}}
+        </div>
+        {{/if}}
+    </div>
+</div> 

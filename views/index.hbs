@@ -1,0 +1,62 @@
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Экзотические животные для вашего дома</h1>
+            <p>Редкие и уникальные питомцы со всего мира с доставкой по России</p>
+            <a href="/animals" class="btn btn-primary">Наши животные</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Animals -->
+<section class="featured-animals">
+    <div class="container">
+        <h2 class="section-title">Популярные категории</h2>
+        <div class="featured-grid">
+            {{#each featuredAnimals}}
+                {{> partials/featured-card}}
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-us">
+    <div class="container">
+        <h2 class="section-title">Почему выбирают нас?</h2>
+        <div class="why-us-grid">
+            {{#each whyUsItems}}
+            <div class="why-us-item">
+                <i class="{{icon}}"></i>
+                <h3>{{title}}</h3>
+                <p>{{description}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">Отзывы клиентов</h2>
+        <div class="testimonials-slider">
+            {{#each testimonials}}
+            <div class="testimonial">
+                <p class="testimonial-text">"{{text}}"</p>
+                <p class="testimonial-author">— {{name}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+{{#contentFor 'scripts'}}
+<script>
+    // Добавляем активный класс для текущей страницы
+    $(document).ready(function() {
+        $('.main-menu a[href="/"]').addClass('active');
+    });
+</script>
+{{/contentFor}} 

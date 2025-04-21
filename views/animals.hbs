@@ -1,0 +1,65 @@
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>Экзотические животные</h1>
+        <p>Полный каталог доступных животных для заказа</p>
+    </div>
+</section>
+
+<!-- Featured Animals Grid -->
+<section class="featured-grid-section">
+    <div class="container">
+        <h2 class="section-title">Наш ассортимент</h2>
+        <div class="grid-gallery">
+            {{#each featuredAnimals}}
+                <div class="grid-item">
+                    <img src="{{image}}" alt="{{title}}">
+                    <div class="grid-caption">
+                        <h3>{{title}}</h3>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+<!-- Animals Categories -->
+<section class="animals-categories">
+    <div class="container">
+        <h2 class="section-title" id="reptiles">Рептилии</h2>
+        <div class="animals-list">
+            {{#each animals}}
+                {{#ifEquals category "reptiles"}}
+                    {{> partials/animal-card}}
+                {{/ifEquals}}
+            {{/each}}
+        </div>
+        
+        <h2 class="section-title" id="birds">Экзотические птицы</h2>
+        <div class="animals-list">
+            {{#each animals}}
+                {{#ifEquals category "birds"}}
+                    {{> partials/animal-card}}
+                {{/ifEquals}}
+            {{/each}}
+        </div>
+        
+        <h2 class="section-title" id="mammals">Млекопитающие</h2>
+        <div class="animals-list">
+            {{#each animals}}
+                {{#ifEquals category "mammals"}}
+                    {{> partials/animal-card}}
+                {{/ifEquals}}
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+{{#contentFor 'scripts'}}
+<script>
+    // Добавляем активный класс для текущей страницы
+    $(document).ready(function() {
+        $('.main-menu a[href="/animals"]').addClass('active');
+    });
+</script>
+{{/contentFor}} 
