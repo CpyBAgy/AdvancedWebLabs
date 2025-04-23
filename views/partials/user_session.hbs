@@ -1,0 +1,9 @@
+<div class="user-session">
+    {{#if isAuthenticated}}
+        <div class="auth-status">Вы вошли как {{username}}</div>
+        <a href="javascript:void(0);" class="auth-button">Выйти</a>
+    {{else}}
+        <div class="auth-status" style="display: none;"></div>
+        <a href="javascript:void(0);" class="auth-button">Войти</a>
+    {{/if}}
+</div> 

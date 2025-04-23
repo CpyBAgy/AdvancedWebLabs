@@ -1,0 +1,25 @@
+<div class="hero-section">
+    <div class="hero-content">
+        <h2>Добро пожаловать в мир экзотики!</h2>
+        <p>Магазин «Два Холма» — ваш проводник в удивительный мир редких и экзотических животных</p>
+        <a href="/animals" class="cta-button">Познакомиться с нашими питомцами</a>
+    </div>
+</div>
+
+<div class="main-section">
+    <h2>Наши уникальные питомцы</h2>
+    <div class="featured-items">
+        {{#each featuredPets}}
+            {{> pet_card}}
+        {{/each}}
+    </div>
+</div>
+
+<div class="main-section">
+    <h2>Наши услуги</h2>
+    <div class="featured-items">
+        {{#each featuredServices}}
+            {{> service_card}}
+        {{/each}}
+    </div>
+</div> 
