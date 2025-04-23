@@ -1,0 +1,154 @@
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>Пользователи</h1>
+        <p>Сообщество любителей экзотических животных</p>
+    </div>
+</section>
+
+<!-- Users List -->
+<section class="users-list">
+    <div class="container">
+        <div class="users-filters">
+            <div class="search-box">
+                <input type="text" id="searchUsers" placeholder="Поиск пользователей...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="filter-options">
+                <select id="sortUsers">
+                    <option value="name">По имени</option>
+                    <option value="date">По дате регистрации</option>
+                    <option value="animals">По количеству животных</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="users-grid">
+            <!-- User Card 1 -->
+            <div class="user-card">
+                <div class="user-avatar">
+                    <img src="pics/memes/chimpanzini-bananini.jpeg" alt="Аватар пользователя">
+                </div>
+                <div class="user-info">
+                    <h3>Иван Петров</h3>
+                    <p class="user-role">Владелец экзотических рептилий</p>
+                    <div class="user-meta">
+                        <span><i class="fas fa-calendar-alt"></i> Участник с 2021</span>
+                        <span><i class="fas fa-paw"></i> 5 животных</span>
+                    </div>
+                    <p class="user-bio">Увлеченный любитель рептилий с многолетним опытом содержания игуан и хамелеонов.</p>
+                    <div class="user-actions">
+                        <a href="#" class="btn btn-outline btn-sm">Профиль</a>
+                        <a href="#" class="btn btn-primary btn-sm">Сообщение</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Card 2 -->
+            <div class="user-card">
+                <div class="user-avatar">
+                    <img src="pics/memes/boneca-ambalabu.webp" alt="Аватар пользователя">
+                </div>
+                <div class="user-info">
+                    <h3>Елена Сидорова</h3>
+                    <p class="user-role">Заводчик экзотических птиц</p>
+                    <div class="user-meta">
+                        <span><i class="fas fa-calendar-alt"></i> Участник с 2019</span>
+                        <span><i class="fas fa-paw"></i> 12 животных</span>
+                    </div>
+                    <p class="user-bio">Профессиональный заводчик редких видов попугаев. Участник международных выставок.</p>
+                    <div class="user-actions">
+                        <a href="#" class="btn btn-outline btn-sm">Профиль</a>
+                        <a href="#" class="btn btn-primary btn-sm">Сообщение</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Card 3 -->
+            <div class="user-card">
+                <div class="user-avatar">
+                    <img src="pics/memes/bobritto-bandito.jpeg" alt="Аватар пользователя">
+                </div>
+                <div class="user-info">
+                    <h3>Алексей Кузнецов</h3>
+                    <p class="user-role">Ветеринарный врач</p>
+                    <div class="user-meta">
+                        <span><i class="fas fa-calendar-alt"></i> Участник с 2020</span>
+                        <span><i class="fas fa-paw"></i> 3 животных</span>
+                    </div>
+                    <p class="user-bio">Ветеринарный врач с специализацией в области экзотических животных. Консультирует по вопросам содержания и здоровья питомцев.</p>
+                    <div class="user-actions">
+                        <a href="#" class="btn btn-outline btn-sm">Профиль</a>
+                        <a href="#" class="btn btn-primary btn-sm">Сообщение</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Card 4 -->
+            <div class="user-card">
+                <div class="user-avatar">
+                    <img src="pics/memes/burbaloni-lulioli.jpg" alt="Аватар пользователя">
+                </div>
+                <div class="user-info">
+                    <h3>Мария Козлова</h3>
+                    <p class="user-role">Любитель экзотических млекопитающих</p>
+                    <div class="user-meta">
+                        <span><i class="fas fa-calendar-alt"></i> Участник с 2022</span>
+                        <span><i class="fas fa-paw"></i> 2 животных</span>
+                    </div>
+                    <p class="user-bio">Начинающий владелец экзотических млекопитающих. Интересуется содержанием сурикатов и карликовых обезьян.</p>
+                    <div class="user-actions">
+                        <a href="#" class="btn btn-outline btn-sm">Профиль</a>
+                        <a href="#" class="btn btn-primary btn-sm">Сообщение</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <a href="#" class="page-prev"><i class="fas fa-chevron-left"></i></a>
+            <a href="#" class="page-number active">1</a>
+            <a href="#" class="page-number">2</a>
+            <a href="#" class="page-number">3</a>
+            <a href="#" class="page-next"><i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+</section>
+
+{{#contentFor 'scripts'}}
+<script>
+    // Добавляем активный класс для текущей страницы
+    $(document).ready(function() {
+        $('.main-menu a[href="/users"]').addClass('active');
+        
+        // Фильтрация пользователей (демонстрационная функция)
+        $('#searchUsers').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('.user-card').each(function() {
+                const userName = $(this).find('h3').text().toLowerCase();
+                const userBio = $(this).find('.user-bio').text().toLowerCase();
+                
+                if (userName.includes(searchTerm) || userBio.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+        
+        // Сортировка пользователей (демонстрационная функция)
+        $('#sortUsers').on('change', function() {
+            const sortOption = $(this).val();
+            
+            if (sortOption === 'name') {
+                // Здесь была бы реальная логика сортировки
+                alert('Сортировка по имени');
+            } else if (sortOption === 'date') {
+                alert('Сортировка по дате регистрации');
+            } else if (sortOption === 'animals') {
+                alert('Сортировка по количеству животных');
+            }
+        });
+    });
+</script>
+{{/contentFor}} 
