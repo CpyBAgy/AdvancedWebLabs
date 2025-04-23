@@ -1,110 +1,185 @@
-import { Controller, Get, Query, Render, Res } from '@nestjs/common';
-import { Response } from 'express';
-import { UsersService } from './users/users.service';
-import { PetsService } from './pets/pets.service';
-import { ServicesService } from './services/services.service';
-import { ApiExcludeController } from '@nestjs/swagger';
+import { Controller, Get, Query, Render, Redirect, Req } from '@nestjs/common';
+import { AppService } from './app.service';
+import { Request } from 'express';
 
-@ApiExcludeController()
 @Controller()
 export class AppController {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly petsService: PetsService,
-    private readonly servicesService: ServicesService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
-  @Get('/')
+  // Получение контекста авторизации
+  private getAuthContext(req: Request): any {
+    const authFromUrl = req.query.auth === 'true';
+    const usernameFromUrl = req.query.username as string;
+    const authFromCookie = req.cookies && req.cookies.isAuthenticated === 'true';
+    const usernameFromCookie = req.cookies ? req.cookies.username : null;
+
+    const isAuthenticated = authFromUrl || authFromCookie;
+    const username = usernameFromUrl || usernameFromCookie || 'Пользователь';
+
+    return {
+      isAuthenticated,
+      username: isAuthenticated ? username : null,
+    };
+  }
+
+  // Редиректы с HTML файлов
+  @Get('index.html')
+  @Redirect()
+  redirectIndex(@Query() query: any) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+      params.set(key, value as string);
+    }
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    return { url: `/${queryString}` };
+  }
+
+  @Get('about.html')
+  @Redirect()
+  redirectAbout(@Query() query: any) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+      params.set(key, value as string);
+    }
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    return { url: `/about${queryString}` };
+  }
+
+  @Get('animals.html')
+  @Redirect()
+  redirectAnimals(@Query() query: any) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+      params.set(key, value as string);
+    }
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    return { url: `/animals${queryString}` };
+  }
+
+  @Get('services.html')
+  @Redirect()
+  redirectServices(@Query() query: any) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+      params.set(key, value as string);
+    }
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    return { url: `/services${queryString}` };
+  }
+
+  @Get('contacts.html')
+  @Redirect()
+  redirectContacts(@Query() query: any) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+      params.set(key, value as string);
+    }
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    return { url: `/contacts${queryString}` };
+  }
+
+  // Основные страницы
+  @Get()
   @Render('index')
-  getLoginPage(@Query('error') error: string) {
-    return { error };
+  getIndex(@Req() req: Request) {
+    const authContext = this.getAuthContext(req);
+    
+    return {
+      title: 'Главная',
+      ...authContext,
+      featuredPets: [
+        {
+          id: 1,
+          name: 'Игуана',
+          species: 'Рептилия',
+          age: '2 года',
+          price: 25000,
+          image: '/pics/iguana.jpg'
+        },
+        {
+          id: 2,
+          name: 'Попугай Жако',
+          species: 'Птица',
+          age: '1 год',
+          price: 50000,
+          image: '/pics/parrot.jpg'
+        },
+        {
+          id: 3,
+          name: 'Паук-птицеед',
+          species: 'Паукообразные',
+          age: '3 года',
+          price: 15000,
+          image: '/pics/spider.jpg'
+        }
+      ],
+      featuredServices: [
+        {
+          id: 1,
+          name: 'Ветеринарный осмотр',
+          description: 'Полный осмотр животного ветеринаром',
+          price: 2000,
+          image: '/pics/vet.jpg'
+        },
+        {
+          id: 2,
+          name: 'Груминг',
+          description: 'Полный уход за внешним видом питомца',
+          price: 1500,
+          image: '/pics/grooming.jpg'
+        },
+        {
+          id: 3,
+          name: 'Обучение',
+          description: 'Дрессировка и обучение базовым командам',
+          price: 3000,
+          image: '/pics/training.jpg'
+        }
+      ]
+    };
   }
 
-  @Get('/login')
-  async login(@Query('email') email: string, @Res() res: Response) {
-    if (!email) {
-      return res.redirect('/?error=Введите email');
-    }
-
-    const user = await this.usersService.findByEmail(email);
-    if (user) {
-      res.redirect(`/pet_shop_main?userId=${user.id}`);
-    } else {
-      res.redirect('/?error=Пользователь не найден');
-    }
-  }
-
-  private async getUserData(userId: string) {
-    if (!userId) return null;
-    return await this.usersService.findById(userId);
-  }
-
-  @Get('/pet_shop_main')
-  @Render('pet_shop_main')
-  async getHome(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Главная страница', user };
-  }
-
-  @Get('/animals')
+  @Get('animals')
   @Render('animals')
-  async getAnimals(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Животные', user };
+  getAnimals(@Req() req: Request) {
+    const authContext = this.getAuthContext(req);
+    
+    return {
+      title: 'Животные',
+      ...authContext
+    };
   }
 
-  @Get('/services')
+  @Get('services')
   @Render('services')
-  async getServices(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Услуги', user };
+  getServices(@Req() req: Request) {
+    const authContext = this.getAuthContext(req);
+    
+    return {
+      title: 'Услуги',
+      ...authContext
+    };
   }
 
-  @Get('/contacts')
+  @Get('contacts')
   @Render('contacts')
-  async getContacts(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Контакты', user };
+  getContacts(@Req() req: Request) {
+    const authContext = this.getAuthContext(req);
+    
+    return {
+      title: 'Контакты',
+      ...authContext
+    };
   }
 
-  @Get('/userlist')
-  @Render('userlist')
-  async getUserList(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Пользователи', user };
-  }
-
-  @Get('/form')
-  @Render('form')
-  async getForms(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Форма', user };
-  }
-
-  @Get('/appointments')
-  @Render('appointments')
-  async getAppointments(@Query('userId') userId: string) {
-    const user = await this.usersService.findById(userId);
-    const pets = await this.petsService.findByOwnerId(userId);
-    const services = await this.servicesService.findAll();
-
-    return { title: 'Запись', user, pets, services };
-  }
-  @Get('/serviceadd')
-  @Render('serviceadd')
-  async getServiceAddPage(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Добавить услугу', user };
-  }
-
-  @Get('/addpet')
-  @Render('addpet') // 👈 это файл views/addpet.hbs
-  async getAddPetPage(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'Добавить питомца', user };
-  }
-  @Get('/logout')
-  logout(@Res() res: Response) {
-    res.redirect('/');
+  @Get('about')
+  @Render('about')
+  getAbout(@Req() req: Request) {
+    const authContext = this.getAuthContext(req);
+    
+    return {
+      title: 'О нас',
+      ...authContext
+    };
   }
 }
