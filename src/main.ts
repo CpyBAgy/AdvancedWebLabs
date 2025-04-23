@@ -3,55 +3,62 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as hbs from 'hbs';
-import * as cookieParser from 'cookie-parser';
+import { ValidationPipe } from '@nestjs/common';
+import { AllExceptionsFilter } from './all-exceptions.filter';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { UpdatePetDto } from './pets/dto/update-pet.dto';
+import { UpdateServiceDto } from './services/dto/update-service.dto';
+import { UpdateAppointmentDto } from './appointments/dto/update-appointment.dto';
+/*import { ElapsedTimeInterceptor } from './common/interceptors/elapsed-time.interceptor';
+import { EtagInterceptor } from './common/interceptors/etag.interceptor';*/
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
-  app.use(cookieParser());
-
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.useGlobalFilters(new AllExceptionsFilter());
+  app.enableCors();
   app.setViewEngine('hbs');
-  
-  hbs.registerPartials(join(__dirname, '..', 'views/partials'));
-  
-  hbs.registerHelper('json', function(context) {
-    return JSON.stringify(context);
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  /*app.useGlobalInterceptors(new ElapsedTimeInterceptor());
+  app.useGlobalInterceptors(new EtagInterceptor());*/
+  hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
+  hbs.registerHelper('ifEquals', function (arg1, arg2, options) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
+    return arg1 === arg2 ? options.fn(this) : options.inverse(this);
   });
-  
-  hbs.registerHelper('eq', function(a, b) {
-    return a === b;
-  });
-  
-  hbs.registerHelper('typeof', function(value) {
-    return typeof value;
+  hbs.registerHelper('eq', (a, b) => a === b);
+  const config = new DocumentBuilder()
+    .setTitle('Lapochka API')
+    .setDescription('Документация к REST API приложения "Лапочка"')
+    .setVersion('1.0')
+    .addTag('users')
+    .addTag('pets')
+    .addTag('services')
+    .addTag('appointments')
+    .addTag('contacts')
+    .build();
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      validationError: {
+        target: false,
+        value: false,
+      },
+    }),
+  );
+
+  const document = SwaggerModule.createDocument(app, config, {
+    extraModels: [UpdatePetDto, UpdateServiceDto, UpdateAppointmentDto],
   });
 
-  app.use((req, res, next) => {
-    const path = req.path;
-    
-    const params = new URLSearchParams();
-    for (const [key, value] of Object.entries(req.query)) {
-      params.set(key, value as string);
-    }
-    const queryString = params.toString() ? `?${params.toString()}` : '';
-    
-    if (path === '/index.html' || path === '/') {
-      return res.redirect(`/${queryString}`);
-    } else if (path === '/animals.html') {
-      return res.redirect(`/animals${queryString}`);
-    } else if (path === '/services.html') {
-      return res.redirect(`/services${queryString}`);
-    } else if (path === '/contacts.html') {
-      return res.redirect(`/contacts${queryString}`);
-    } else if (path === '/about.html') {
-      return res.redirect(`/about${queryString}`);
-    }
-    
-    next();
-  });
-
-  await app.listen(process.env.PORT ?? 3000);
+  SwaggerModule.setup('api-docs', app, document);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`Application is running on: http://localhost:${port}`);
 }
-bootstrap(); 
+
+bootstrap();
