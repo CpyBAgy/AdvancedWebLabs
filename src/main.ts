@@ -4,39 +4,52 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as hbs from 'hbs';
 import * as cookieParser from 'cookie-parser';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.use(cookieParser());
 
+  // Настройка глобального ValidationPipe
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // Удаляет свойства, которые не имеют декораторов
+      transform: true, // Преобразует примитивы в нужные типы
+      forbidNonWhitelisted: true, // Запрещает свойства, которые не определены в DTO
+    }),
+  );
+
+  // Настройка статических файлов и шаблонов
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
-  
+
   hbs.registerPartials(join(__dirname, '..', 'views/partials'));
-  
+
+  // Регистрация Handlebars хелперов
   hbs.registerHelper('json', function(context) {
     return JSON.stringify(context);
   });
-  
+
   hbs.registerHelper('eq', function(a, b) {
     return a === b;
   });
-  
+
   hbs.registerHelper('typeof', function(value) {
     return typeof value;
   });
 
+  // Редиректы для обработки HTML-файлов и URL
   app.use((req, res, next) => {
     const path = req.path;
-    
+
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(req.query)) {
       params.set(key, value as string);
     }
     const queryString = params.toString() ? `?${params.toString()}` : '';
-    
+
     if (path === '/index.html' || path === '/') {
       return res.redirect(`/${queryString}`);
     } else if (path === '/animals.html') {
@@ -48,10 +61,10 @@ async function bootstrap() {
     } else if (path === '/about.html') {
       return res.redirect(`/about${queryString}`);
     }
-    
+
     next();
   });
 
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap(); 
+bootstrap();

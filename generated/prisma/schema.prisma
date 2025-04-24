@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Animal {
+  id           String        @id @default(uuid())
+  name         String
+  species      String
+  price        Float
+  age          Float?
+  gender       String? // male, female, unknown
+  description  String?
+  status       String // available, sold, reserved
+  categoryId   String
+  category     Category      @relation(fields: [categoryId], references: [id])
+  orders       Order[]
+  appointments Appointment[]
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  animals     Animal[]
+}
+
+model Customer {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  name     String
+  phone    String?
+  address  String?
+  orders   Order[]
+  contacts Contact[]
+}
+
+model Order {
+  id         String    @id @default(uuid())
+  customerId String
+  animalId   String?
+  customer   Customer  @relation(fields: [customerId], references: [id])
+  animal     Animal?   @relation(fields: [animalId], references: [id])
+  services   Service[]
+  date       DateTime  @default(now())
+  status     String // pending, completed, cancelled
+  total      Float
+}
+
+model Service {
+  id           String        @id @default(uuid())
+  name         String
+  description  String?
+  price        Float
+  duration     Int? // Длительность в минутах
+  type         String // Тип услуги: ветеринарная, консультация, доставка и т.д.
+  appointments Appointment[]
+  orders       Order[] // Many-to-many с заказами
+}
+
+model Contact {
+  id         String   @id @default(uuid())
+  email      String?
+  phone      String?
+  type       String // Тип контакта: основной, рабочий, экстренный и т.д.
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String
+}
+
+model Appointment {
+  id        String   @id @default(uuid())
+  date      DateTime
+  status    String // Статус: запланирована, завершена, отменена
+  notes     String?
+  animalId  String
+  animal    Animal   @relation(fields: [animalId], references: [id])
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id])
+}

@@ -39,4 +39,4 @@ export class Animal {
       throw new Error('Animal cannot be sold');
     }
   }
-} 
+}
