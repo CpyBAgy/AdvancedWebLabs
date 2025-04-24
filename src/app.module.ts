@@ -1,31 +1,39 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from './prisma/prisma.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaModule } from './prisma/prisma.module';
-import { AnimalsModule } from './modules/animals/animals.module';
-import { CategoriesModule } from './modules/categories/categories.module';
-import { CustomersModule } from './modules/customers/customers.module';
-import { OrdersModule } from './modules/orders/orders.module';
-import { ServicesModule } from './modules/services/services.module';
-import { ContactsModule } from './modules/contacts/contacts.module';
-import { AppointmentsModule } from './modules/appointments/appointments.module';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-import { InitModule } from './modules/init/init.module';
-
+import { UserModule } from './user/user.module';
+import { UsersModule } from './users/users.module';
+import { PetsModule } from './pets/pets.module';
+import { AppointmentsModule } from './appointments/appointments.module';
+import { ServicesModule } from './services/services.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { ComplexityPlugin } from './complexity.plugin';
 @Module({
   imports: [
-    EventEmitterModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     PrismaModule,
-    AnimalsModule,
-    CategoriesModule,
-    CustomersModule,
-    OrdersModule,
+    UserModule,
+    UsersModule,
+    PetsModule,
+    AppointmentsModule,
     ServicesModule,
     ContactsModule,
-    AppointmentsModule,
-    InitModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      playground: true,
+      sortSchema: true,
+      introspection: true,
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ComplexityPlugin],
 })
 export class AppModule {}

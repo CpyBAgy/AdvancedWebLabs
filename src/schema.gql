@@ -1,0 +1,86 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Appointment {
+  date: String!
+  id: ID!
+  pet: Pet
+  petId: String!
+  service: Service
+  serviceId: String!
+}
+
+input CreateAppointmentInput {
+  date: String!
+  petId: String!
+  serviceId: String!
+}
+
+input CreatePetInput {
+  name: String!
+  ownerId: String!
+  type: String!
+}
+
+input CreateServiceInput {
+  description: String!
+  name: String!
+  price: Float!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+}
+
+type Mutation {
+  AddPet(createPetInput: CreatePetInput!): Pet!
+  AddUser(createUserInput: CreateUserInput!): User!
+  DeleteAppointment(id: String!): Boolean!
+  DeletePet(id: String!): Boolean!
+  DeleteService(id: String!): Boolean!
+  DeleteUser(id: String!): Boolean!
+  MakeAppointment(createAppointmentInput: CreateAppointmentInput!): Appointment!
+  NewService(createServiceInput: CreateServiceInput!): Service!
+  UpdatePetInfo(input: UpdatePetInput!): Pet!
+}
+
+type Pet {
+  id: ID!
+  name: String!
+  owner: User
+  ownerId: String!
+  type: String!
+}
+
+type Query {
+  appointment(id: String!): Appointment!
+  appointments: [Appointment!]!
+  pet(id: String!): Pet!
+  pets: [Pet!]!
+  service(id: String!): Service!
+  services: [Service!]!
+  user(id: String!): User!
+  users: [User!]!
+}
+
+type Service {
+  description: String
+  id: ID!
+  name: String!
+  price: Float!
+}
+
+input UpdatePetInput {
+  id: String!
+  name: String
+  ownerId: String
+  type: String
+}
+
+type User {
+  email: String!
+  id: ID!
+  name: String!
+}
