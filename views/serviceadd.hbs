@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="stylesheet" href="styles/animals.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="Js/main.js" defer></script>
+  <title>Лапочка</title>
+</head>
+<body>
+
+{{> header}}
+{{> session}}
+{{> aside}}
+{{> navbar}}
+
+<h1>Добавление услуг</h1>
+
+<form id="serviceForm">
+  <input name="name" placeholder="Название" required />
+  <input name="description" placeholder="Описание" required />
+  <input name="price" type="number" placeholder="Цена" required />
+  <button type="submit">Добавить</button>
+</form>
+
+<p id="message" style="display: none;"></p>
+
+<ul id="servicesList"></ul>
+
+<script src="Js/services.js"></script>
+{{> footer}}
+</body>
+</html>

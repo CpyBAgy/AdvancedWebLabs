@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="stylesheet" href="styles/forms.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="Js/main.js" defer></script>
+  <script src="Js/appointment.js" defer></script>
+  <title>Лапочка</title>
+</head>
+<body>
+
+{{> header}}
+{{> session}}
+{{> aside}}
+{{> navbar}}
+
+<main>
+  <section class="form-section">
+    <h1 class="main__article__name">Добавьте запись</h1>
+    <form id="appointmentForm" class="styled-form">
+
+      <label for="pet">Выберите питомца:</label>
+      <select name="petId" id="pet" required>
+        {{#each pets}}
+          <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+
+      <label for="service">Выберите услугу:</label>
+      <select name="serviceId" id="service" required>
+        {{#each services}}
+          <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+
+      <label for="date">Дата:</label>
+      <input type="datetime-local" name="date" id="date" required>
+
+      <button type="submit">Записаться</button>
+    </form>
+
+    <p id="message" style="color: green; display: none;"></p>
+
+    <h2>Ваши записи</h2>
+    <ul id="appointmentsList">
+      {{#each appointments}}
+        <li id="appointment-{{this.id}}">
+          {{this.date}} - {{this.pet.name}} → {{this.service.name}}
+          <button onclick="deleteAppointment('{{this.id}}')">Удалить</button>
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+</main>
+{{> footer}}
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="stylesheet" href="styles/animals.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="Js/main.js" defer></script>
+  <title>Лапочка</title>
+</head>
+<body>
+
+{{> header}}
+{{> session}}
+{{> aside}}
+{{> navbar}}
+
+<h1>Добавить питомца</h1>
+
+<main>
+  <form id="petForm">
+    <input type="text" name="name" placeholder="Имя питомца" required />
+    <label for="type">Тип животного:</label>
+    <select name="type" id="type" required>
+      <option value="">Выберите тип</option>
+      <option value="Собака">Собака</option>
+      <option value="Кошка">Кошка</option>
+      <option value="Пернатый">Пернатый</option>
+      <option value="Грызун">Грызун</option>
+      <option value="Рептилия">Рептилия</option>
+    </select>
+    <button type="submit">Добавить</button>
+  </form>
+
+  <p id="message" style="display: none;"></p>
+
+  <ul id="petsList">
+  </ul>
+</main>
+
+<script>
+  const userId = "{{user.id}}";
+</script>
+
+<script src="Js/addpet.js"></script>
+
+{{> footer}}
+</body>
+</html>

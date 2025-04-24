@@ -1,25 +1,44 @@
-<div class="hero-section">
-    <div class="hero-content">
-        <h2>Добро пожаловать в мир экзотики!</h2>
-        <p>Магазин «Два Холма» — ваш проводник в удивительный мир редких и экзотических животных</p>
-        <a href="/animals" class="cta-button">Познакомиться с нашими питомцами</a>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
 
-<div class="main-section">
-    <h2>Наши уникальные питомцы</h2>
-    <div class="featured-items">
-        {{#each featuredPets}}
-            {{> pet_card}}
-        {{/each}}
-    </div>
-</div>
+    <link rel="stylesheet" href="/styles/services_style.css">
+    <link rel="stylesheet" href="/styles/style_main_page.css">
+    <link rel="stylesheet" href="/styles/Contacts.css">
+    <link rel="stylesheet" href="/styles/forms.css">
+    <link rel="stylesheet" href="/styles/animals.css">
+    <link rel="stylesheet" href="/styles/UserList.css">
+  <script src="/Js/Map.js"></script>
+  <script src="/Js/Swiper.js"></script>
+  <script src="/Js/fetchUsers.js"></script>
+  <script src="/Js/forms.js"></script>
+  <script src=" /Js/main.js"></script>
+</head>
+<body>
+{{> header}}
 
-<div class="main-section">
-    <h2>Наши услуги</h2>
-    <div class="featured-items">
-        {{#each featuredServices}}
-            {{> service_card}}
-        {{/each}}
-    </div>
-</div> 
+<main class="main">
+  <h1>Добро пожаловать!</h1>
+  <p>Сначала авторизуйтесь</p>
+  <p> <strong>barsik@cats.com</strong></p>
+  <p> <strong>https://m3312-sudnik.onrender.com/api-docs</strong></p>
+
+  <section class="auth-section">
+    <h2>Авторизация</h2>
+    <p>Введите ваше имя для входа:</p>
+    <form action="/login" method="get">
+      <input type="email" name="email" placeholder="Введите email" required>
+      <button type="submit">Войти</button>
+    </form>
+
+    {{#if error}}
+      <p style="color: red;">{{error}}</p>
+    {{/if}}
+  </section>
+</main>
+{{> footer}}
+</body>
+</html>

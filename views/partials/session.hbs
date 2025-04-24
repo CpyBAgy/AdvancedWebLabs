@@ -1,0 +1,9 @@
+<div class="session-info">
+  {{#if user}}
+    <p>Вы вошли как <strong>{{user.name}}</strong></p>
+    <a href="/logout">Выйти</a>
+  {{else}}
+    <p>Вы не авторизованы</p>
+    <a href="/login">Войти</a>
+  {{/if}}
+</div>

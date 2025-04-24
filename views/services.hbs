@@ -1,4 +1,80 @@
-<div class="services-page">
-    <h1>Наши услуги</h1>
-    <p>Здесь представлены услуги по уходу за экзотическими животными</p>
-</div> 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles/services_style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js" defer></script>
+  <script src="Js/main.js" defer></script>
+  <script src="Js/Swiper.js" defer></script>
+  <title>Лапочка</title>
+  <style>
+  </style>
+</head>
+<body>
+
+{{> header}}
+{{> session}}
+{{> aside}}
+{{> navbar}}
+
+<main class="main">
+  <section class="horizontal-images">
+    <div class="carousel">
+      <div><img src="photos/cat-grooming-services.jpeg" alt="Фото 1"></div>
+      <div><img src="photos/dog-getting-jabs-IE-768x513.jpeg" alt="Фото 2"></div>
+      <div><img src="photos/grooming-lp-by-appointment-bath-and-haircut-img-1000x667.avif" alt="Фото 3"></div>
+      <div><img src="photos/domashniygrumingkoshki.jpg" alt="Фото 4"></div>
+    </div>
+  </section>
+  <br>
+  <section id="services" class="services__section">
+    <h2 class="services__title">Наши услуги</h2>
+
+    <table class="services-table">
+      <thead>
+      <tr>
+        <th>Услуга</th>
+        <th>Стоимость</th>
+        <th>Описание</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Стрижка собак</td>
+        <td>1500 руб.</td>
+        <td>Профессиональная стрижка для любых пород.</td>
+      </tr>
+      <tr>
+        <td>Чистка зубов</td>
+        <td>1200 руб.</td>
+        <td>Услуга по гигиене полости рта для домашних питомцев.</td>
+      </tr>
+      <tr>
+        <td>Вакцинация</td>
+        <td>800 руб.</td>
+        <td>Прививки против инфекционных заболеваний.</td>
+      </tr>
+      <tr>
+        <td>Консультация ветеринара</td>
+        <td>1000 руб.</td>
+        <td>Профессиональные советы по уходу и здоровью вашего питомца.</td>
+      </tr>
+      <tr>
+        <td>Груминг кошек</td>
+        <td>1400 руб.</td>
+        <td>Полный уход за шерстью кошек.</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+{{> footer}}
+
+</body>
+</html>

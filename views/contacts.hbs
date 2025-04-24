@@ -1,18 +1,84 @@
-<div class="contacts-page">
-    <h1>Контакты</h1>
-    <p>Свяжитесь с нами для получения дополнительной информации</p>
-    <div class="contact-info">
-        <div class="contact-item">
-            <h3>Адрес</h3>
-            <p>г. Санкт-Петербург, ул. Экзотическая, д. 123</p>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles/style_main_page.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="Js/main.js" defer></script>
+  <script src="Js/Map.js" defer></script>
+  <title>Лапочка</title>
+</head>
+<body>
+
+{{> header}}
+{{> session}}
+{{> aside}}
+{{> navbar}}
+
+<main class="main">
+  <div class="contacts_block container">
+    <div class="contacts_subblock">
+      <div class="contacts_item">
+        <div class="contacts_icon">
+          <img src="photos/location-48.png" alt="img">
         </div>
-        <div class="contact-item">
-            <h3>Телефон</h3>
-            <p>+7 (XXX) XXX-XX-XX</p>
+        <div class="contacts_text">
+          <p>Фурштатская 50</p>
+          <p>пн-пт 10-00 до 22-00</p>
+          <p>сб-вс 10-00 до 21-00</p>
         </div>
-        <div class="contact-item">
-            <h3>Email</h3>
-            <p>info@dvaholma.ru</p>
+      </div>
+      <div class="contacts_item">
+        <div class="contacts_icon">
+          <img src="photos/location-48.png" alt="img">
         </div>
+        <div class="contacts_text">
+          <p>Малая Морская 19</p>
+          <p>пн-пт 09-00 до 21-00</p>
+          <p>сб-вс 09-00 до 20-00</p>
+        </div>
+      </div>
     </div>
-</div> 
+    <div class="contacts_subblock">
+      <div class="contacts_item">
+        <div class="contacts_icon">
+          <img src="photos/iphone-2-48.png" alt="#">
+        </div>
+        <div class="info_position">
+          <p>Звоните сюда</p>
+          <a href="tel:+">####</a>
+        </div>
+      </div>
+      <div class="contacts_item">
+        <div class="contacts_icon">
+          <img src="photos/iphone-2-48.png" alt="#">
+        </div>
+        <div class="info_position">
+          <p>Звоните сюда</p>
+          <a href="tel:+">####</a>
+        </div>
+      </div>
+    </div>
+    <div class="contacts_subblock">
+      <div class="contacts_item">
+        <div class="contacts_icon">
+          <img src="photos/edit-48.png" alt="#">
+        </div>
+        <div class="info_position">
+          <p>Пишите сюда</p>
+          <a href="mailto:">lapochka.club@mail.ru</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<section>
+  <div id="map" style="width: 100%; height: 400px;"></div>
+</section>
+{{> footer}}
+
+</body>
+</html>
