@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О нас - Два Холма</title>
+  <link href="style.css" rel="stylesheet"/>
+  <script src="js%20scripts/main.js" defer></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+{{> header}}
+{{> navbar}}
+
+<div class="page-banner about-banner">
+  <h2>О магазине "Два Холма"</h2>
+  <p>Наша история, миссия и команда профессионалов</p>
+</div>
+
+<main class="main-section">
+  <section class="about-intro">
+    <div class="about-intro-content">
+      <h3>Добро пожаловать в мир экзотики!</h3>
+      <div class="about-separator"></div>
+      <p>Магазин экзотических животных "Два Холма" специализируется на продаже редких и уникальных животных и предоставлении товаров и услуг для их содержания. Наши специалисты помогут выбрать правильного питомца и обеспечат консультации по уходу.</p>
+      <p>Мы стремимся создать уникальное пространство, где любители экзотических животных могут найти все необходимое для своих питомцев, получить квалифицированную помощь и стать частью сообщества единомышленников.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">лет опыта</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">счастливых клиентов</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">300+</div>
+        <div class="stat-label">видов животных</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15</div>
+        <div class="stat-label">специалистов</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Include other sections from about.html such as timeline, mission, team, gallery, etc. -->
+
+  <!-- History Section with Timeline -->
+  <section class="about-history">
+    <h3><i class="fas fa-history"></i> Наша история</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-badge">2010</div>
+        <div class="timeline-content">
+          <h4>Основание магазина</h4>
+          <p>Магазин "Два Холма" был основан группой энтузиастов, страстно увлеченных экзотическими животными. Начав с небольшого ассортимента рептилий, мы быстро завоевали доверие первых клиентов.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">2013</div>
+        <div class="timeline-content">
+          <h4>Расширение ассортимента</h4>
+          <p>Мы значительно расширили ассортимент, добавив экзотических птиц, млекопитающих и редких насекомых. В этом же году открылся наш первый ветеринарный кабинет.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">2016</div>
+        <div class="timeline-content">
+          <h4>Образовательная программа</h4>
+          <p>Мы запустили серию семинаров и мастер-классов по уходу за экзотическими животными. Наши образовательные программы помогли многим начинающим владельцам.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">2020</div>
+        <div class="timeline-content">
+          <h4>Обновление магазина</h4>
+          <p>Полностью обновили интерьер магазина, создав уникальные биозоны для демонстрации животных в условиях, максимально приближенных к естественной среде обитания.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">2024</div>
+        <div class="timeline-content">
+          <h4>Сегодняшний день</h4>
+          <p>Сегодня "Два Холма" — это не просто магазин, а центр экспертизы и сообщество любителей экзотических животных. Мы продолжаем развиваться и внедрять новые услуги.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission and Values Section -->
+  <section class="our-mission">
+    <div class="mission-content">
+      <h3><i class="fas fa-bullseye"></i> Наша миссия</h3>
+      <div class="mission-text">
+        <p>Миссия магазина "Два Холма" — сделать содержание экзотических животных доступным и безопасным, обеспечивая владельцев питомцев не только качественными товарами, но и знаниями.</p>
+        <p>Мы стремимся создать ответственное сообщество любителей экзотических животных, формировать культуру правильного обращения с редкими видами и вносить вклад в сохранение биоразнообразия.</p>
+      </div>
+    </div>
+    <div class="mission-values">
+      <div class="value-item">
+        <div class="value-icon"><i class="fas fa-certificate"></i></div>
+        <h4>Качество</h4>
+        <p>Мы предлагаем только сертифицированных, здоровых животных и гарантируем качество всех товаров</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"><i class="fas fa-leaf"></i></div>
+        <h4>Ответственность</h4>
+        <p>Мы поощряем ответственное отношение к содержанию экзотических животных</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"><i class="fas fa-book"></i></div>
+        <h4>Знания</h4>
+        <p>Мы делимся знаниями и обучаем владельцев правильному уходу за питомцами</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add script to animate elements on scroll -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Анимация при прокрутке
+      const animateOnScroll = () => {
+        const sections = document.querySelectorAll('.about-stats, .team-member, .gallery-item, .testimonial, .partner-logo, .visit-container');
+
+        sections.forEach(section => {
+          const position = section.getBoundingClientRect().top;
+          const screenPosition = window.innerHeight * 0.8;
+
+          if (position < screenPosition) {
+            section.classList.add('animate');
+          }
+        });
+      };
+
+      window.addEventListener('scroll', animateOnScroll);
+      animateOnScroll();
+    });
+  </script>
+</main>
+
+{{> footer}}
+
+</body>
+</html>

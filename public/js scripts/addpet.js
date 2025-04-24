@@ -1,16 +1,25 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("petForm");
   const petsList = document.getElementById("petsList");
+  const emptyPets = document.getElementById("emptyPets");
+  const messageElement = document.getElementById("message");
 
   async function loadPets() {
     try {
       const response = await fetch(`/pets?ownerId=${userId}`);
       const pets = await response.json();
 
-      petsList.innerHTML = ""; // очищаем
-      pets.forEach(addPetToList); // рендерим всё через JS
+      petsList.innerHTML = "";
+
+      if (pets.length === 0) {
+        emptyPets.style.display = 'block';
+      } else {
+        emptyPets.style.display = 'none';
+        pets.forEach(addPetToList);
+      }
     } catch (error) {
       console.error("Ошибка загрузки питомцев:", error);
+      showMessage("Ошибка загрузки питомцев", "error");
     }
   }
 
@@ -20,13 +29,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     li.innerHTML = `
     <div>
       <strong>${pet.name}</strong> (${pet.type})
-      <button data-id="${pet.id}" class="delete-btn">Удалить</button>
-      <button data-id="${pet.id}" class="edit-btn">Редактировать</button>
     </div>
-    <form action="/pets/update" method="POST" class="edit-form" id="edit-form-${pet.id}" style="display: none; margin-top: 8px;">
+    <div class="pet-actions">
+      <button data-id="${pet.id}" class="edit-btn"><i class="fas fa-edit"></i> Редактировать</button>
+      <button data-id="${pet.id}" class="delete-btn"><i class="fas fa-trash-alt"></i> Удалить</button>
+    </div>
+    <form class="edit-form" id="edit-form-${pet.id}" style="display: none; width: 100%;">
       <input type="hidden" name="id" value="${pet.id}" />
       <input type="hidden" name="ownerId" value="${userId}" />
-      <input type="text" name="name" value="${pet.name}" required />
+      <input type="text" name="name" value="${pet.name}" required placeholder="Имя питомца" />
       <select name="type" required>
         <option value="Собака" ${pet.type === "Собака" ? "selected" : ""}>Собака</option>
         <option value="Кошка" ${pet.type === "Кошка" ? "selected" : ""}>Кошка</option>
@@ -34,9 +45,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         <option value="Грызун" ${pet.type === "Грызун" ? "selected" : ""}>Грызун</option>
         <option value="Рептилия" ${pet.type === "Рептилия" ? "selected" : ""}>Рептилия</option>
       </select>
-      <button type="submit">Сохранить</button>
+      <button type="submit"><i class="fas fa-save"></i> Сохранить</button>
     </form>
-  `;
+    `;
 
     petsList.appendChild(li);
 
@@ -45,20 +56,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     const editForm = li.querySelector(".edit-form");
 
     editButton.addEventListener("click", () => {
-      editForm.style.display = editForm.style.display === "none" ? "block" : "none";
+      editForm.style.display = editForm.style.display === "none" ? "flex" : "none";
+    });
+
+    // Обработка формы редактирования
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(editForm);
+      const jsonData = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch(`/pets/update`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jsonData),
+        });
+
+        if (response.ok) {
+          showMessage("Питомец обновлен!", "success");
+          await loadPets();
+        } else {
+          showMessage("Ошибка при обновлении питомца", "error");
+        }
+      } catch (error) {
+        console.error("Ошибка:", error);
+        showMessage("Ошибка при обновлении питомца", "error");
+      }
     });
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const editButtons = document.querySelectorAll(".edit-btn");
-    editButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const petId = btn.dataset.id;
-        const form = document.getElementById(`edit-form-${petId}`);
-        form.style.display = form.style.display === "none" ? "block" : "none";
-      });
-    });
-  });
+  function showMessage(text, type = "success") {
+    messageElement.textContent = text;
+    messageElement.className = `notification ${type}`;
+    messageElement.style.display = "block";
+
+    setTimeout(() => {
+      messageElement.style.display = "none";
+    }, 3000);
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -74,42 +109,49 @@ document.addEventListener("DOMContentLoaded", async () => {
         body: JSON.stringify(jsonData),
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        document.getElementById("message").textContent = "Питомец добавлен!";
-        document.getElementById("message").style.display = "block";
+        const result = await response.json();
+        showMessage("Питомец успешно добавлен!");
         form.reset();
-        addPetToList(result);
-        setTimeout(() => {
-          document.getElementById("message").style.display = "none";
-        }, 3000);
+        await loadPets();
       } else {
-        alert("Ошибка: " + (result.error || "Неизвестная ошибка"));
+        const error = await response.json();
+        showMessage(`Ошибка: ${error.message || "Неизвестная ошибка"}`, "error");
       }
     } catch (error) {
       console.error("Ошибка:", error);
+      showMessage("Ошибка соединения с сервером", "error");
     }
   });
 
   petsList.addEventListener("click", async (event) => {
-    if (event.target.classList.contains("delete-btn")) {
-      const petId = event.target.dataset.id;
-      try {
-        const response = await fetch(`/pets/${petId}`, {
-          method: "DELETE",
-        });
+    if (event.target.classList.contains("delete-btn") ||
+      event.target.parentElement.classList.contains("delete-btn")) {
+      const button = event.target.classList.contains("delete-btn") ?
+        event.target : event.target.parentElement;
+      const petId = button.dataset.id;
 
-        if (response.ok) {
-          document.getElementById(`pet-${petId}`).remove();
-        } else {
-          alert("Ошибка при удалении");
+      if (confirm("Вы уверены, что хотите удалить этого питомца?")) {
+        try {
+          const response = await fetch(`/pets/${petId}`, {
+            method: "DELETE",
+          });
+
+          if (response.ok) {
+            showMessage("Питомец успешно удален");
+            document.getElementById(`pet-${petId}`).remove();
+
+            // Проверяем, остались ли питомцы
+            if (petsList.children.length === 0) {
+              emptyPets.style.display = 'block';
+            }
+          } else {
+            showMessage("Ошибка при удалении услуги", "error");
+          }
         }
-      } catch (error) {
-        console.error("Ошибка удаления:", error);
       }
-    }
-  });
+    });
 
-  await loadPets();
-});
+    // Загружаем услуги при загрузке страницы
+    await loadServices();
+  });

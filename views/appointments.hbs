@@ -3,58 +3,95 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Добавление животного - Два Холма</title>
+  <title>Запись на услуги - Два Холма</title>
   <link href="style.css" rel="stylesheet"/>
   <script src="js%20scripts/main.js" defer></script>
-  <script src="js%20scripts/forms.js" defer></script>
   <script src="js%20scripts/appointment.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 {{> header}}
-{{> session}}
 {{> navbar}}
 
-<main>
+<div class="page-banner services-banner">
+  <h2>Запись на услуги</h2>
+  <p>Запишитесь на обслуживание вашего экзотического питомца</p>
+</div>
+
+<main class="main-section">
   <section class="form-section">
-    <h1 class="main__article__name">Добавьте запись</h1>
+    <h3><i class="fas fa-calendar-plus"></i> Добавить запись</h3>
     <form id="appointmentForm" class="styled-form">
+      <div class="form-group">
+        <label for="pet"><i class="fas fa-paw"></i> Выберите питомца:</label>
+        <select name="petId" id="pet" required>
+          <option value="" disabled selected>Выберите питомца</option>
+          {{#each pets}}
+            <option value="{{this.id}}">{{this.name}} ({{this.type}})</option>
+          {{/each}}
+        </select>
+      </div>
 
-      <label for="pet">Выберите питомца:</label>
-      <select name="petId" id="pet" required>
-        {{#each pets}}
-          <option value="{{this.id}}">{{this.name}}</option>
-        {{/each}}
-      </select>
+      <div class="form-group">
+        <label for="service"><i class="fas fa-concierge-bell"></i> Выберите услугу:</label>
+        <select name="serviceId" id="service" required>
+          <option value="" disabled selected>Выберите услугу</option>
+          {{#each services}}
+            <option value="{{this.id}}">{{this.name}} - {{this.price}}₽</option>
+          {{/each}}
+        </select>
+      </div>
 
-      <label for="service">Выберите услугу:</label>
-      <select name="serviceId" id="service" required>
-        {{#each services}}
-          <option value="{{this.id}}">{{this.name}}</option>
-        {{/each}}
-      </select>
+      <div class="form-group">
+        <label for="date"><i class="fas fa-calendar-alt"></i> Дата и время:</label>
+        <input type="datetime-local" name="date" id="date" required>
+      </div>
 
-      <label for="date">Дата:</label>
-      <input type="datetime-local" name="date" id="date" required>
-
-      <button type="submit">Записаться</button>
+      <button type="submit" class="primary-button">
+        <i class="fas fa-plus"></i> Записаться
+      </button>
     </form>
 
-    <p id="message" style="color: green; display: none;"></p>
+    <div id="message" class="notification success" style="display: none;"></div>
+  </section>
 
-    <h2>Ваши записи</h2>
-    <ul id="appointmentsList">
-      {{#each appointments}}
-        <li id="appointment-{{this.id}}">
-          {{this.date}} - {{this.pet.name}} → {{this.service.name}}
-          <button onclick="deleteAppointment('{{this.id}}')">Удалить</button>
-        </li>
-      {{/each}}
-    </ul>
+  <section class="appointments-list">
+    <h3><i class="fas fa-list"></i> Ваши записи</h3>
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>Дата и время</th>
+          <th>Питомец</th>
+          <th>Услуга</th>
+          <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody id="appointmentsList">
+        {{#each appointments}}
+          <li id="appointment-{{this.id}}" class="appointment-item">
+            <div class="appointment-info">
+              <span class="appointment-date">{{this.date}}</span>
+              <span class="appointment-pet">{{this.pet.name}}</span>
+              <span class="appointment-service">{{this.service.name}}</span>
+            </div>
+            <button data-id="{{this.id}}" class="delete-btn action-button delete-button">
+              <i class="fas fa-trash-alt"></i> Удалить
+            </button>
+          </li>
+        {{/each}}
+        </tbody>
+      </table>
+
+      <div id="emptyAppointments" class="empty-table-message" style="display: {{#if appointments.length}}none{{else}}block{{/if}};">
+        <i class="fas fa-calendar-times"></i>
+        <p>У вас пока нет записей. Используйте форму выше, чтобы записаться на услугу.</p>
+      </div>
+    </div>
   </section>
 </main>
+
 {{> footer}}
 </body>
 </html>

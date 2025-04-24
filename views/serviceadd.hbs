@@ -3,31 +3,70 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Добавление услуг - Два Холма</title>
+  <title>Управление услугами - Два Холма</title>
   <link href="style.css" rel="stylesheet"/>
   <script src="js%20scripts/main.js" defer></script>
   <script src="js%20scripts/services.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 {{> header}}
-{{> session}}
 {{> navbar}}
 
-<h1>Добавление услуг</h1>
+<div class="page-banner services-banner">
+  <h2>Управление услугами</h2>
+  <p>Добавляйте и редактируйте услуги для экзотических питомцев</p>
+</div>
 
-<form id="serviceForm">
-  <input name="name" placeholder="Название" required />
-  <input name="description" placeholder="Описание" required />
-  <input name="price" type="number" placeholder="Цена" required />
-  <button type="submit">Добавить</button>
-</form>
+<main class="main-section">
+  <section class="form-section">
+    <div class="section-header">
+      <h3><i class="fas fa-plus-circle"></i> Добавить услугу</h3>
+    </div>
 
-<p id="message" style="display: none;"></p>
+    <form id="serviceForm" class="styled-form">
+      <div class="form-group">
+        <label for="name"><i class="fas fa-tag"></i> Название услуги</label>
+        <input type="text" name="name" id="name" placeholder="Название услуги" required>
+      </div>
 
-<ul id="servicesList"></ul>
+      <div class="form-group">
+        <label for="description"><i class="fas fa-align-left"></i> Описание</label>
+        <textarea name="description" id="description" placeholder="Описание услуги" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="price"><i class="fas fa-ruble-sign"></i> Цена</label>
+        <input type="number" name="price" id="price" min="0" step="0.01" placeholder="0.00" required>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="primary-button">
+          <i class="fas fa-plus"></i> Добавить
+        </button>
+      </div>
+    </form>
+
+    <div id="message" class="notification success" style="display: none;"></div>
+  </section>
+
+  <section class="table-section">
+    <div class="table-header">
+      <h3><i class="fas fa-list"></i> Список услуг</h3>
+    </div>
+
+    <div class="table-container">
+      <ul id="servicesList" class="services-list"></ul>
+
+      <div id="emptyServices" class="empty-table-message" style="display: none;">
+        <i class="fas fa-concierge-bell"></i>
+        <p>Список услуг пуст. Используйте форму выше, чтобы добавить услугу.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
 {{> footer}}
 </body>
 </html>

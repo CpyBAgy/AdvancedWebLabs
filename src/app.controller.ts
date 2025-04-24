@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { UsersService } from './users/users.service';
 import { PetsService } from './pets/pets.service';
 import { ServicesService } from './services/services.service';
+import { AppointmentsService } from './appointments/appointments.service';
 import { ApiExcludeController } from '@nestjs/swagger';
 
 @ApiExcludeController()
@@ -12,6 +13,7 @@ export class AppController {
     private readonly usersService: UsersService,
     private readonly petsService: PetsService,
     private readonly servicesService: ServicesService,
+    private readonly appointmentsService: AppointmentsService,
   ) {}
 
   @Get('/')
@@ -60,6 +62,13 @@ export class AppController {
     return { title: 'Услуги', user };
   }
 
+  @Get('/about')
+  @Render('about')
+  async getAbout(@Query('userId') userId: string) {
+    const user = await this.getUserData(userId);
+    return { title: 'О нас', user };
+  }
+
   @Get('/contacts')
   @Render('contacts')
   async getContacts(@Query('userId') userId: string) {
@@ -90,19 +99,38 @@ export class AppController {
 
     return { title: 'Запись', user, pets, services };
   }
+
   @Get('/serviceadd')
   @Render('serviceadd')
   async getServiceAddPage(@Query('userId') userId: string) {
     const user = await this.getUserData(userId);
-    return { title: 'Добавить услугу', user };
+    return { title: 'Управление услугами', user };
   }
 
   @Get('/addpet')
-  @Render('addpet') // 👈 это файл views/addpet.hbs
+  @Render('addpet')
   async getAddPetPage(@Query('userId') userId: string) {
     const user = await this.getUserData(userId);
     return { title: 'Добавить питомца', user };
   }
+
+  @Get('/admin-panel')
+  @Render('admin-panel')
+  async getAdminPanel(@Query('userId') userId: string) {
+    const user = await this.getUserData(userId);
+    const pets = await this.petsService.findByOwnerId(userId);
+    const services = await this.servicesService.findAll();
+    const appointments = await this.appointmentsService.findByUserId(userId);
+
+    return {
+      title: 'Панель управления',
+      user,
+      pets,
+      services,
+      appointments
+    };
+  }
+
   @Get('/logout')
   logout(@Res() res: Response) {
     res.redirect('/');

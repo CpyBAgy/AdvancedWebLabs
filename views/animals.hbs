@@ -16,27 +16,12 @@
 <body>
 
 {{> header}}
-{{> session}}
 {{> navbar}}
 
 <div class="page-banner">
   <h2>Экзотические животные</h2>
   <p>Откройте для себя удивительный мир редких и необычных созданий</p>
 </div>
-
-<main class="main">
-  <section id="about" class="main__section">
-    <h2 class="main__article__name">Наши животные</h2>
-    <div class="animal-cards">
-      {{> animal_card photo="/photos/cat.jpeg" name="Кошка" description="Я люблю уютные места и мягкие подушки. Заботьтесь о моей шерсти и давайте вкусный корм!"}}
-      {{> animal_card photo="/photos/dog.jpeg" name="Собака" description="Обожаю долгие прогулки и вашу компанию! Пожалуйста, тренируйте меня и ухаживайте за мной!"}}
-      {{> animal_card photo="/photos/rats.jpeg" name="Грызуны" description="Мне нравятся активные игры и уютные домики. Чистите мою клетку и давайте вкусные угощения!"}}
-      {{> animal_card photo="/photos/fish.jpg" name="Рыба" description="Я люблю плавать в чистой воде. Пожалуйста, следите за фильтрацией и освещением аквариума!"}}
-      {{> animal_card photo="/photos/birds.jpeg" name="Птица" description="Я люблю петь и летать! Давайте мне просторную клетку, свежую воду и немного общения."}}
-      {{> animal_card photo="/photos/reptile.jpeg" name="Рептилия" description="Я люблю тепло и уют. Пожалуйста, следите за температурой и влажностью в моем террариуме!"}}
-    </div>
-  </section>
-</main>
 
 <main class="main-section">
   <section class="animal-filter">

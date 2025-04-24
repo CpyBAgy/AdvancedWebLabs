@@ -2,5 +2,9 @@
   <div class="logo-container">
     <img alt="Логотип магазина" src="pics/memes/assasini-cappuccini.jpeg" class="logo"/>
     <h1 class="site-title">Два Холма</h1>
+    <div class="auth-container">
+      <span class="auth-status">{{#if user}}Вы вошли как {{user.name}}{{else}}Гость{{/if}}</span>
+      <button class="auth-button">{{#if user}}Выйти{{else}}Войти{{/if}}</button>
+    </div>
   </div>
 </header>

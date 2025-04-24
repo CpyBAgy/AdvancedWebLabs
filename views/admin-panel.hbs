@@ -10,6 +10,7 @@
   <script src="js%20scripts/addpet.js" defer></script>
   <script src="js%20scripts/services.js" defer></script>
   <script src="js%20scripts/appointment.js" defer></script>
+  <script src="js%20scripts/admin-panel.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -174,10 +175,9 @@
     }
   </style>
 </head>
-<body>
+<body data-user-id="{{user.id}}">
 
 {{> header}}
-{{> session}}
 {{> navbar}}
 
 <div class="page-banner form-banner">
