@@ -50,6 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const formData = new FormData(form);
     const jsonData = Object.fromEntries(formData.entries());
 
+    console.log("Отправляем данные:", jsonData); // Для отладки
+
     try {
       const response = await fetch("/services", {
         method: "POST",
@@ -58,6 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       const result = await response.json();
+      console.log("Получен ответ:", result); // Для отладки
 
       if (response.ok) {
         document.getElementById("message").textContent = "Услуга добавлена!";
@@ -96,5 +99,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   });
+
+  // Загружаем услуги при загрузке страницы
   await loadServices();
 });
