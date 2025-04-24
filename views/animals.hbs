@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <link rel="stylesheet" href="styles/animals.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <script src="Js/main.js" defer></script>
-  <title>Лапочка</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Экзотические животные - Два Холма</title>
+  <link href="style.css" rel="stylesheet"/>
+  <script src="js%20scripts/main.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js" defer></script>
+  <script src="js%20scripts/animals.js" defer></script>
 </head>
 <body>
 
 {{> header}}
 {{> session}}
-{{> aside}}
 {{> navbar}}
+
+<div class="page-banner">
+  <h2>Экзотические животные</h2>
+  <p>Откройте для себя удивительный мир редких и необычных созданий</p>
+</div>
 
 <main class="main">
   <section id="about" class="main__section">
@@ -28,6 +37,108 @@
     </div>
   </section>
 </main>
+
+<main class="main-section">
+  <section class="animal-filter">
+    <h3>Найдите своего идеального питомца</h3>
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">Все животные</button>
+      <button class="filter-btn" data-filter="reptiles">Рептилии</button>
+      <button class="filter-btn" data-filter="birds">Птицы</button>
+      <button class="filter-btn" data-filter="mammals">Млекопитающие</button>
+      <button class="filter-btn" data-filter="insects">Насекомые</button>
+    </div>
+  </section>
+
+  <section id="featured-carousel" class="section-carousel">
+    <h3>Популярные питомцы</h3>
+    <div class="carousel">
+      {{> carousel photo="pics/memes/il-cacto-hippopotamo.jpeg" caption="Игуана"}}
+      {{> carousel photo="pics/memes/trippi-troppi.webp" caption="Королевский питон"}}
+      {{> carousel photo="pics/memes/boneca-ambalabu.webp" caption="Капуцин"}}
+      {{> carousel photo="pics/memes/bobritto-bandito.jpeg" caption="Африканский серый попугай"}}
+      {{> carousel photo="pics/memes/tralalelo-tralala.webp" caption="Бородатая агама"}}
+      {{> carousel photo="pics/memes/golubiro-shpioniro.jpg" caption="Одногорбый верблюд"}}
+      {{> carousel photo="pics/memes/lirili-larila.webp" caption="Тукан"}}
+      {{> carousel photo="pics/memes/octopusini-blueberriny.jpeg" caption="Паук-птицеед"}}
+      {{> carousel photo="pics/memes/orangutini-ananasini.jpeg" caption="Мадагаскарский таракан"}}
+    </div>
+  </section>
+
+  <section id="animal-catalog" class="animals-catalog">
+    <h3>Каталог животных</h3>
+
+    <div class="animal-grid">
+      {{> animal_card type="reptiles" photo="pics/memes/orangutini-ananasini.jpeg" name="Зеленая игуана" description="Крупная травоядная ящерица с уникальной окраской и дружелюбным характером." price="65,000 ₽" size="До 2 м" age="15-20 лет"}}
+      {{> animal_card type="reptiles" photo="pics/memes/penguinator-termoregulator.jpeg" name="Йеменский хамелеон" description="Удивительная рептилия, способная менять окраску в зависимости от настроения." price="45,000 ₽" size="До 60 см" age="5-8 лет"}}
+      {{> animal_card type="reptiles" photo="pics/memes/tralalelo-tralala.webp" name="Бородатая агама" description="Дружелюбная рептилия с ярким окрасом и спокойным характером. Легко приручается." price="48,000 ₽" size="До 60 см" age="8-12 лет"}}
+      {{> animal_card type="reptiles" photo="pics/memes/trippi-troppi.webp" name="Королевский питон" description="Спокойная и неагрессивная змея, идеальная для начинающих. Отличается красивым окрасом." price="55,000 ₽" size="До 1.5 м" age="20-30 лет"}}
+      {{> animal_card type="reptiles" photo="pics/memes/trulimero-trulicina.webp" name="Красноухая черепаха" description="Популярная водная черепаха с яркими красными полосами на голове. Активная и интересная." price="12,000 ₽" size="До 30 см" age="20-40 лет"}}
+      {{> animal_card type="birds" photo="pics/memes/tung-tung-tung-sahur.jpg" name="Сине-жёлтый ара" description="Яркий и интеллектуальный попугай, способный к обучению речи и трюкам." price="180,000 ₽" size="До 90 см" age="50-60 лет"}}
+      {{> animal_card type="birds" photo="pics/memes/bobritto-bandito.jpeg" name="Африканский серый попугай" description="Один из самых умных и разговорчивых попугаев. Способен запоминать сотни слов." price="150,000 ₽" size="До 35 см" age="40-60 лет"}}
+      {{> animal_card type="birds" photo="pics/memes/bombardiro-crocodilo.webp" name="Тукан Токо" description="Экзотическая птица с ярким клювом и энергичным характером." price="230,000 ₽" size="До 60 см" age="15-20 лет"}}
+      {{> animal_card type="birds" photo="pics/memes/bombombini-gusini.webp" name="Венценосный голубь" description="Крупный и элегантный голубь с впечатляющим веером перьев на голове." price="85,000 ₽" size="До 75 см" age="10-15 лет"}}
+      {{> animal_card type="mammals" photo="pics/memes/boneca-ambalabu.webp" name="Капуцин" description="Умная и социальная обезьяна, легко поддающаяся дрессировке." price="450,000 ₽" size="30-45 см" age="35-45 лет"}}
+      {{> animal_card type="mammals" photo="pics/memes/bri-bri-bicus-dicus.webp" name="Одногорбый верблюд" description="Величественное животное, адаптированное к жизни в пустыне." price="750,000 ₽" size="До 3 м" age="40-50 лет"}}
+      {{> animal_card type="mammals" photo="pics/memes/brr-brr-patapim.webp" name="Сахарная сумчатая летяга" description="Маленький и активный зверек с ночным образом жизни. Отличается дружелюбным характером." price="85,000 ₽" size="15-20 см" age="12-15 лет"}}
+      {{> animal_card type="insects" photo="pics/memes/burbaloni-lulioli.jpg" name="Розовый птицеед" description="Крупный и яркий паук с розоватым оттенком, популярный среди коллекционеров." price="15,000 ₽" size="До 28 см" age="15-25 лет"}}
+      {{> animal_card type="insects" photo="pics/memes/chimpanzini-bananini.jpeg" name="Императорский скорпион" description="Один из самых крупных видов скорпионов с впечатляющим внешним видом и спокойным темпераментом." price="8,000 ₽" size="До 20 см" age="6-8 лет"}}
+      {{> animal_card type="insects" photo="pics/memes/frigo-camelo.jpeg" name="Мадагаскарский таракан" description="Крупный декоративный таракан с необычным окрасом и простым уходом. Идеален для начинающих." price="2,500 ₽" size="До 8 см" age="2-3 года"}}
+    </div>
+  </section>
+
+  <section class="care-tips">
+    <h3>Советы по уходу</h3>
+    <div class="tips-container">
+      <div class="tip-card">
+        <i class="fas fa-temperature-high tip-icon"></i>
+        <h4>Температурный режим</h4>
+        <p>Большинство экзотических животных требуют особого температурного режима. Мы поможем подобрать оборудование!</p>
+      </div>
+      <div class="tip-card">
+        <i class="fas fa-utensils tip-icon"></i>
+        <h4>Питание</h4>
+        <p>В нашем магазине всегда в наличии специализированные корма для любых видов экзотических питомцев.</p>
+      </div>
+      <div class="tip-card">
+        <i class="fas fa-home tip-icon"></i>
+        <h4>Обустройство жилища</h4>
+        <p>Мы поможем создать идеальную среду обитания для вашего питомца, максимально приближенную к естественной.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="inquiry-modal" id="inquiryModal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h3>Оставить заявку</h3>
+    <form id="inquiryForm">
+      <div class="form-group">
+        <label for="name">Ваше имя</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Телефон</label>
+        <input type="tel" id="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="animal">Интересующее животное</label>
+        <input type="text" id="animal" readonly>
+      </div>
+      <div class="form-group">
+        <label for="message">Сообщение</label>
+        <textarea id="message" rows="4"></textarea>
+      </div>
+      <button type="submit" class="submit-button">Отправить заявку</button>
+    </form>
+  </div>
+</div>
+
 {{> footer}}
 </body>
 </html>

@@ -1,48 +1,174 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <<meta charset="UTF-8">
-  <link rel="stylesheet" href="styles/UserList.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <script src="Js/main.js" defer></script>
-  <script src="Js/fetchUsers.js" defer></script>
-  <title>Лапочка</title>
-  <style>
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Наши клиенты - Два Холма</title>
+  <link href="style.css" rel="stylesheet"/>
+  <script src="js%20scripts/main.js" defer></script>
+  <script src="js%20scripts/users.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 {{> header}}
 {{> session}}
-{{> aside}}
 {{> navbar}}
 
-<main>
-  <section class="user-section">
-    <h2>Список Животных</h2>
-    <div id="preloader" class="preloader">
-      <div class="loader"></div>
-    </div>
-    <div id="animalTable" class="grid-table">
-      <div class="header">Имя</div>
-      <div class="header">Email</div>
-      <div class="header">Телефон</div>
-      <div class="header">Сайт</div>
-    </div>
+<div class="page-banner clients-banner">
+  <h2>Наши клиенты</h2>
+  <p>Люди, которые доверили нам заботу о своих экзотических питомцах</p>
+</div>
 
-    <template id="row-template">
-      <div class="cell name"></div>
-      <div class="cell email"></div>
-      <div class="cell phone"></div>
-      <div class="cell site"></div>
-    </template>
+<main class="main-section">
+  <section class="clients-intro">
+    <h3><i class="fas fa-heart"></i> Сообщество «Два Холма»</h3>
+    <p>Наш магазин гордится обширным сообществом любителей экзотических животных. Наши клиенты — это увлеченные люди, которые разделяют нашу любовь к редким видам и стремятся обеспечить своим питомцам наилучшие условия жизни.</p>
+    <p>На этой странице вы можете познакомиться с некоторыми из наших постоянных клиентов, узнать их истории и увидеть, каких экзотических питомцев они выбрали.</p>
   </section>
-  <div id="pagination" class="pagination">
-    <button id="prevBtn" disabled>Назад</button>
-    <button id="nextBtn">Вперед</button>
+
+  <section class="search-section">
+    <div class="search-container">
+      <input type="text" id="clientSearch" placeholder="Поиск по имени или питомцу...">
+      <i class="fas fa-search search-icon"></i>
+    </div>
+  </section>
+
+  <div id="preloader" class="preloader">
+    <div class="loader"></div>
   </div>
+
+  <section class="clients-grid" id="clientsContainer">
+    <!-- Клиенты будут добавлены через JavaScript -->
+  </section>
+
+  <template id="client-card-template">
+    <div class="client-card">
+      <div class="client-avatar">
+        <div class="avatar-placeholder"></div>
+      </div>
+      <div class="client-info">
+        <h3 class="client-name"></h3>
+        <p class="client-location"><i class="fas fa-map-marker-alt"></i> <span class="location-text"></span></p>
+        <p class="client-contact"><i class="fas fa-envelope"></i> <span class="email-text"></span></p>
+        <p class="client-contact"><i class="fas fa-phone"></i> <span class="phone-text"></span></p>
+        <div class="client-pets">
+          <h4><i class="fas fa-paw"></i> Питомцы:</h4>
+          <div class="pet-tags"></div>
+        </div>
+        <div class="client-story">
+          <p class="client-testimonial">«Магазин "Два Холма" — идеальное место для любителей экзотических животных. Я получил отличные рекомендации по уходу за моими питомцами!»</p>
+        </div>
+        <div class="client-website">
+          <a href="#" target="_blank" class="website-link"><i class="fas fa-globe"></i> Личный сайт</a>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <div class="pagination-container">
+    <div class="pagination" id="pagination">
+      <button id="prevBtn" class="pagination-btn"><i class="fas fa-chevron-left"></i> Назад</button>
+      <div class="page-indicators" id="pageIndicators"></div>
+      <button id="nextBtn" class="pagination-btn">Вперед <i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <section class="join-community">
+    <h3><i class="fas fa-users"></i> Станьте частью нашего сообщества</h3>
+    <p>Вы любите экзотических животных и хотите присоединиться к нашему сообществу? Заполните форму ниже, и мы свяжемся с вами!</p>
+
+    <form id="joinForm" class="community-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="joinName"><i class="fas fa-user"></i> Ваше имя</label>
+          <input type="text" id="joinName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="joinEmail"><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="joinEmail" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="joinPhone"><i class="fas fa-phone"></i> Телефон</label>
+          <input type="tel" id="joinPhone">
+        </div>
+
+        <div class="form-group">
+          <label for="joinLocation"><i class="fas fa-map-marker-alt"></i> Город</label>
+          <input type="text" id="joinLocation">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="joinPets"><i class="fas fa-paw"></i> Ваши питомцы</label>
+        <input type="text" id="joinPets" placeholder="Например: Игуана, Попугай ара...">
+      </div>
+
+      <div class="form-group">
+        <label for="joinMessage"><i class="fas fa-comment"></i> Сообщение</label>
+        <textarea id="joinMessage" rows="4" placeholder="Расскажите немного о себе и своих питомцах..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-button"><i class="fas fa-paper-plane"></i> Присоединиться</button>
+    </form>
+  </section>
+
+  <section class="community-benefits">
+    <h3><i class="fas fa-award"></i> Преимущества нашего сообщества</h3>
+    <div class="benefits-grid">
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="fas fa-comments"></i></div>
+        <div class="benefit-content">
+          <h4>Обмен опытом</h4>
+          <p>Общайтесь с другими владельцами экзотических животных, делитесь опытом и получайте советы.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="fas fa-percent"></i></div>
+        <div class="benefit-content">
+          <h4>Система скидок</h4>
+          <p>Члены сообщества получают персональные скидки на товары и услуги нашего магазина.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="fas fa-calendar-alt"></i></div>
+        <div class="benefit-content">
+          <h4>Мероприятия</h4>
+          <p>Участвуйте в регулярных встречах, семинарах и выставках для любителей экзотических животных.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="fas fa-user-md"></i></div>
+        <div class="benefit-content">
+          <h4>Ветеринарная поддержка</h4>
+          <p>Получайте консультации от наших специалистов по уходу за вашими питомцами.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="fas fa-book"></i></div>
+        <div class="benefit-content">
+          <h4>Обучающие материалы</h4>
+          <p>Получайте доступ к эксклюзивным статьям, видео и руководствам по уходу за редкими видами животных.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-icon"><i class="fas fa-users"></i></div>
+        <div class="benefit-content">
+          <h4>Клубные встречи</h4>
+          <p>Участвуйте в ежемесячных встречах с единомышленниками и обменивайтесь опытом содержания экзотических питомцев.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 {{> footer}}
 

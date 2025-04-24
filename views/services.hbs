@@ -1,80 +1,305 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="styles/services_style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js" defer></script>
-  <script src="Js/main.js" defer></script>
-  <script src="Js/Swiper.js" defer></script>
-  <title>Лапочка</title>
-  <style>
-  </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Услуги - Два Холма</title>
+  <link href="style.css" rel="stylesheet"/>
+  <script src="js%20scripts/main.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 {{> header}}
 {{> session}}
-{{> aside}}
 {{> navbar}}
 
-<main class="main">
-  <section class="horizontal-images">
-    <div class="carousel">
-      <div><img src="photos/cat-grooming-services.jpeg" alt="Фото 1"></div>
-      <div><img src="photos/dog-getting-jabs-IE-768x513.jpeg" alt="Фото 2"></div>
-      <div><img src="photos/grooming-lp-by-appointment-bath-and-haircut-img-1000x667.avif" alt="Фото 3"></div>
-      <div><img src="photos/domashniygrumingkoshki.jpg" alt="Фото 4"></div>
+<div class="page-banner services-banner">
+  <h2>Наши услуги</h2>
+  <p>Полный спектр услуг для ваших экзотических питомцев</p>
+</div>
+
+<main class="main-section">
+  <section class="services-intro">
+    <h3>Комплексная забота о вашем питомце</h3>
+    <p>Магазин «Два Холма» предлагает не только продажу экзотических животных, но и полный спектр услуг для обеспечения здоровья и комфорта вашего питомца. Наши специалисты прошли обучение по работе с редкими видами животных и готовы предоставить профессиональную поддержку.</p>
+  </section>
+
+  <section class="services-grid">
+    {{> service_card
+      icon="fas fa-stethoscope"
+      name="Ветеринарные услуги"
+      description="Специализированная ветеринарная помощь для редких и экзотических видов животных."
+      feature_1="Профилактические осмотры"
+      feature_2="Вакцинация"
+      feature_3="Лечение заболеваний"
+      feature_4="Хирургические вмешательства"
+      price="от 1500 ₽"
+    }}
+
+    {{> service_card
+      icon="fas fa-graduation-cap"
+      name="Обучение и дрессировка"
+      description="Индивидуальные и групповые занятия по обучению экзотических животных."
+      feature_1="Базовые команды"
+      feature_2="Социализация"
+      feature_3="Коррекция поведения"
+      feature_4="Выступления и шоу"
+      price="от 2500 ₽"
+    }}
+
+    {{> service_card
+      icon="fas fa-cut"
+      name="Груминг"
+      description="Профессиональный уход за внешностью вашего экзотического питомца."
+      feature_1="Стрижка когтей и шерсти"
+      feature_2="Чистка перьев"
+      feature_3="Обработка панциря"
+      feature_4="СПА-процедуры"
+      price="от 1800 ₽"
+    }}
+
+    {{> service_card
+      icon="fas fa-hotel"
+      name="Гостиница для животных"
+      description="Временное содержание экзотических питомцев в комфортных условиях."
+      feature_1="Индивидуальные вольеры"
+      feature_2="Контроль температуры"
+      feature_3="Правильное питание"
+      feature_4="Видеонаблюдение"
+      price="от 1000 ₽/сутки"
+    }}
+
+    {{> service_card
+      icon="fas fa-truck"
+      name="Транспортировка"
+      description="Безопасная перевозка экзотических животных по городу и стране."
+      feature_1="Специализированный транспорт"
+      feature_2="Климат-контроль"
+      feature_3="Опытные сопровождающие"
+      feature_4="Оформление документов"
+      price="от 3000 ₽"
+    }}
+
+    {{> service_card
+      icon="fas fa-home"
+      name="Обустройство жилища"
+      description="Профессиональная помощь в создании комфортной среды для питомца."
+      feature_1="Подбор террариума/вольера"
+      feature_2="Установка оборудования"
+      feature_3="Декорирование"
+      feature_4="Автоматизация ухода"
+      price="от 5000 ₽"
+    }}
+  </section>
+
+  <section class="service-pricing">
+    <h3>Товары для экзотических животных</h3>
+    <div class="table-scroll">
+      <table class="responsive-table pricing-table">
+        <thead>
+        <tr>
+          <th>Товар</th>
+          <th>Цена</th>
+          <th>Описание</th>
+          <th>Наличие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td data-label="Товар">Корм для рептилий премиум</td>
+          <td data-label="Цена">1200 ₽</td>
+          <td data-label="Описание">Специализированный корм с повышенным содержанием витаминов.</td>
+          <td data-label="Наличие"><span class="in-stock">В наличии</span></td>
+        </tr>
+        <tr>
+          <td data-label="Товар">Террариум 100x50x50 см</td>
+          <td data-label="Цена">15000 ₽</td>
+          <td data-label="Описание">Стеклянный террариум с системой вентиляции и освещения.</td>
+          <td data-label="Наличие"><span class="in-stock">В наличии</span></td>
+        </tr>
+        <tr>
+          <td data-label="Товар">УФ-лампа для рептилий</td>
+          <td data-label="Цена">3500 ₽</td>
+          <td data-label="Описание">Специализированная лампа для обеспечения УФ-излучения.</td>
+          <td data-label="Наличие"><span class="low-stock">Осталось мало</span></td>
+        </tr>
+        <tr>
+          <td data-label="Товар">Декорации для террариума</td>
+          <td data-label="Цена">от 500 ₽</td>
+          <td data-label="Описание">Натуральные и искусственные элементы декора для создания естественной среды.</td>
+          <td data-label="Наличие"><span class="in-stock">В наличии</span></td>
+        </tr>
+        <tr>
+          <td data-label="Товар">Инкубатор для яиц рептилий</td>
+          <td data-label="Цена">8500 ₽</td>
+          <td data-label="Описание">Автоматический инкубатор с контролем температуры и влажности.</td>
+          <td data-label="Наличие"><span class="out-stock">Под заказ</span></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </section>
-  <br>
-  <section id="services" class="services__section">
-    <h2 class="services__title">Наши услуги</h2>
 
-    <table class="services-table">
-      <thead>
-      <tr>
-        <th>Услуга</th>
-        <th>Стоимость</th>
-        <th>Описание</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Стрижка собак</td>
-        <td>1500 руб.</td>
-        <td>Профессиональная стрижка для любых пород.</td>
-      </tr>
-      <tr>
-        <td>Чистка зубов</td>
-        <td>1200 руб.</td>
-        <td>Услуга по гигиене полости рта для домашних питомцев.</td>
-      </tr>
-      <tr>
-        <td>Вакцинация</td>
-        <td>800 руб.</td>
-        <td>Прививки против инфекционных заболеваний.</td>
-      </tr>
-      <tr>
-        <td>Консультация ветеринара</td>
-        <td>1000 руб.</td>
-        <td>Профессиональные советы по уходу и здоровью вашего питомца.</td>
-      </tr>
-      <tr>
-        <td>Груминг кошек</td>
-        <td>1400 руб.</td>
-        <td>Полный уход за шерстью кошек.</td>
-      </tr>
-      </tbody>
-    </table>
+  <section class="service-faq">
+    <h3>Часто задаваемые вопросы</h3>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Какие документы нужны для покупки экзотического животного?
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>При покупке экзотического животного вам понадобится паспорт. Для некоторых редких видов, занесенных в Красную книгу, могут потребоваться дополнительные разрешения. Наши специалисты помогут вам оформить все необходимые документы.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Как часто нужно посещать ветеринара с экзотическим питомцем?
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Рекомендуется проходить профилактический осмотр не реже 1-2 раз в год. Для молодых животных или при адаптации к новым условиям могут потребоваться более частые визиты. Наши ветеринары специализируются на экзотических видах и всегда готовы помочь.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Предоставляете ли вы гарантию на животных?
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Да, мы предоставляем гарантию на здоровье животных в течение 14 дней с момента покупки. Если в этот период ветеринар обнаружит заболевание, которое было до покупки, мы вернем деньги или предложим замену.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          Можно ли оставить питомца в гостинице на время отпуска?
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Конечно! Наша гостиница принимает экзотических животных на любой срок. Мы обеспечиваем комфортные условия, соответствующие естественной среде обитания вашего питомца, включая правильное питание и температурный режим.</p>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
-{{> footer}}
 
+<div class="service-booking-modal" id="serviceBookingModal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h3>Запись на услугу</h3>
+    <form id="serviceBookingForm">
+      <div class="form-group">
+        <label for="clientName">Ваше имя</label>
+        <input type="text" id="clientName" required>
+      </div>
+      <div class="form-group">
+        <label for="clientPhone">Телефон</label>
+        <input type="tel" id="clientPhone" required>
+      </div>
+      <div class="form-group">
+        <label for="clientEmail">Email</label>
+        <input type="email" id="clientEmail" required>
+      </div>
+      <div class="form-group">
+        <label for="serviceType">Услуга</label>
+        <input type="text" id="serviceType" readonly>
+      </div>
+      <div class="form-group">
+        <label for="serviceDate">Дата</label>
+        <input type="date" id="serviceDate" required>
+      </div>
+      <div class="form-group">
+        <label for="serviceTime">Время</label>
+        <select id="serviceTime" required>
+          <option value="">Выберите время</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="12:00">12:00</option>
+          <option value="14:00">14:00</option>
+          <option value="15:00">15:00</option>
+          <option value="16:00">16:00</option>
+          <option value="17:00">17:00</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="clientNotes">Дополнительная информация</label>
+        <textarea id="clientNotes" rows="3"></textarea>
+      </div>
+      <button type="submit" class="submit-button">Записаться</button>
+    </form>
+  </div>
+</div>
+
+{{> footer}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Аккордеон для FAQ
+    const accordionItems = document.querySelectorAll('.accordion-item');
+
+    accordionItems.forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      const content = item.querySelector('.accordion-content');
+      const icon = header.querySelector('.accordion-icon');
+
+      header.addEventListener('click', () => {
+        // Закрываем все остальные элементы
+        accordionItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.querySelector('.accordion-content').style.maxHeight = null;
+            otherItem.querySelector('.accordion-icon').textContent = '+';
+            otherItem.classList.remove('active');
+          }
+        });
+
+        // Переключаем текущий элемент
+        item.classList.toggle('active');
+
+        if (item.classList.contains('active')) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.textContent = '−';
+        } else {
+          content.style.maxHeight = null;
+          icon.textContent = '+';
+        }
+      });
+    });
+
+    // Модальное окно записи на услугу
+    const modal = document.getElementById('serviceBookingModal');
+    const bookButtons = document.querySelectorAll('.book-service-btn');
+    const closeModal = document.querySelector('.close-modal');
+    const serviceInput = document.getElementById('serviceType');
+
+    bookButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const serviceCard = button.closest('.service-card');
+        const serviceName = serviceCard.querySelector('h3').textContent;
+        serviceInput.value = serviceName;
+        modal.style.display = 'flex';
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Обработка формы
+    const bookingForm = document.getElementById('serviceBookingForm');
+
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Спасибо за запись! Мы свяжемся с вами для подтверждения.');
+      modal.style.display = 'none';
+      bookingForm.reset();
+    });
+  });
+</script>
 </body>
 </html>

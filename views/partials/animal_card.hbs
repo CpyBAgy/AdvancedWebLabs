@@ -1,11 +1,15 @@
-<div class="flip-card">
-  <div class="flip-card-inner">
-    <div class="flip-card-front">
-      <img class="img" src="{{photo}}">
+<div class="animal-card {{type}}">
+  <div class="animal-image">
+    <img src="{{photo}}" alt="{{name}}">
+  </div>
+  <div class="animal-details">
+    <h4>{{name}}</h4>
+    <p class="animal-description">{{description}}</p>
+    <p class="animal-price">{{price}}</p>
+    <div class="animal-features">
+      <span><i class="fas fa-ruler"></i> {{size}}</span>
+      <span><i class="fas fa-clock"></i> {{age}}</span>
     </div>
-    <div class="flip-card-back">
-      <h1>{{name}}</h1>
-      <p>{{description}}</p>
-    </div>
+    <button class="inquiry-btn">Оставить заявку</button>
   </div>
 </div>

@@ -1,14 +1,26 @@
-<footer class="footer">
-  <p>&copy; 2024 Магазин "Лапочка". Все права защищены.</p>
-<!--
-  <p class="timing">Время обработки на сервере: {{elapsedTime}}</p>
-  <p class="timing">Время загрузки на клиенте: <span id="client-time"></span></p>
-
-  <script>
-    const start = performance.now();
-    window.addEventListener('load', () => {
-      const end = performance.now();
-      document.getElementById('client-time').textContent = Math.round(end - start) + 'мс (клиент)';
-    });
-  </script>-->
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>Магазин "Два Холма"</h3>
+      <p>Ваш проводник в мир экзотических животных</p>
+    </div>
+    <div class="footer-section">
+      <h3>Контакты</h3>
+      <p><i class="fas fa-map-marker-alt"></i> ул. Экзотическая, 45, Москва</p>
+      <p><i class="fas fa-phone"></i> 123-456-7890</p>
+      <p><i class="fas fa-envelope"></i> info@dvaholma.com</p>
+    </div>
+    <div class="footer-section">
+      <h3>Мы в соцсетях</h3>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2024 Магазин "Два Холма". Все права защищены.</p>
+    <p id="performance-display"></p>
+  </div>
 </footer>
