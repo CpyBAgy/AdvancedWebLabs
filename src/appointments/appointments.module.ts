@@ -7,8 +7,18 @@ import { PetsModule } from '../pets/pets.module';
 import { ServicesModule } from '../services/services.module';
 import { AppointmentsApiController } from './appointments.api.controller';
 import { AppointmentsResolver } from './appointments.resolver';
+import { CacheModule } from '@nestjs/cache-manager';
 @Module({
-  imports: [PrismaModule, UsersModule, PetsModule, ServicesModule],
+  imports: [
+    PrismaModule,
+    UsersModule,
+    PetsModule,
+    ServicesModule,
+    CacheModule.register({
+      ttl: 5,
+      max: 100,
+    }),
+  ],
   controllers: [AppointmentsController, AppointmentsApiController],
   providers: [AppointmentsService, AppointmentsResolver],
   exports: [AppointmentsService],

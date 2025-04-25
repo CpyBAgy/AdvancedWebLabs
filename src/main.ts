@@ -9,9 +9,6 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { UpdatePetDto } from './pets/dto/update-pet.dto';
 import { UpdateServiceDto } from './services/dto/update-service.dto';
 import { UpdateAppointmentDto } from './appointments/dto/update-appointment.dto';
-/*import { ElapsedTimeInterceptor } from './common/interceptors/elapsed-time.interceptor';
-import { EtagInterceptor } from './common/interceptors/etag.interceptor';*/
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalFilters(new AllExceptionsFilter());
@@ -20,11 +17,9 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public'));
 
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  /*app.useGlobalInterceptors(new ElapsedTimeInterceptor());
-  app.useGlobalInterceptors(new EtagInterceptor());*/
   hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
   hbs.registerHelper('ifEquals', function (arg1, arg2, options) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     return arg1 === arg2 ? options.fn(this) : options.inverse(this);
   });
   hbs.registerHelper('eq', (a, b) => a === b);

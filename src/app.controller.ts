@@ -60,13 +60,6 @@ export class AppController {
     return { title: 'Услуги', user };
   }
 
-  @Get('/about')
-  @Render('about')
-  async getAbout(@Query('userId') userId: string) {
-    const user = await this.getUserData(userId);
-    return { title: 'О нас', user };
-  }
-
   @Get('/contacts')
   @Render('contacts')
   async getContacts(@Query('userId') userId: string) {
@@ -97,12 +90,11 @@ export class AppController {
 
     return { title: 'Запись', user, pets, services };
   }
-
   @Get('/serviceadd')
   @Render('serviceadd')
   async getServiceAddPage(@Query('userId') userId: string) {
     const user = await this.getUserData(userId);
-    return { title: 'Управление услугами', user };
+    return { title: 'Добавить услугу', user };
   }
 
   @Get('/addpet')
@@ -111,7 +103,6 @@ export class AppController {
     const user = await this.getUserData(userId);
     return { title: 'Добавить питомца', user };
   }
-
   @Get('/logout')
   logout(@Res() res: Response) {
     res.redirect('/');

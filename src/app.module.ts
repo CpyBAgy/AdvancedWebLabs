@@ -13,11 +13,20 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { ComplexityPlugin } from './complexity.plugin';
+import { CacheModule } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ElapsedTimeInterceptor } from './common/interceptors/elapsed-time.interceptor';
+import { StorageModule } from './storage/storage.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    CacheModule.register({
+      ttl: 5,
+      isGlobal: true,
+    }),
+    StorageModule,
     PrismaModule,
     UserModule,
     UsersModule,
@@ -27,13 +36,22 @@ import { ComplexityPlugin } from './complexity.plugin';
     ContactsModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'schema.gql'),
       playground: true,
       sortSchema: true,
+      path: '/graphql',
       introspection: true,
+      debug: false,
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, ComplexityPlugin],
+  providers: [
+    AppService,
+    ComplexityPlugin,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ElapsedTimeInterceptor,
+    },
+  ],
 })
 export class AppModule {}

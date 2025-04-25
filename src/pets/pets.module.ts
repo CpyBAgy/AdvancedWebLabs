@@ -5,15 +5,16 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { PetsApiController } from './pets.api.controller';
 import { PetsResolver } from './pets.resolver';
 import { UsersModule } from '../users/users.module';
-//import { CacheModule } from '@nestjs/cache-manager';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
-    PrismaModule,UsersModule
-    /*CacheModule.register({
-      ttl: 10, // Время жизни кэша в секундах
-      max: 100, // Максимальное количество записей
-    }),*/
+    PrismaModule,
+    UsersModule,
+    CacheModule.register({
+      ttl: 5,
+      max: 100,
+    }),
   ],
   controllers: [PetsController, PetsApiController],
   providers: [PetsService, PetsResolver],

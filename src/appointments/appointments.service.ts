@@ -45,7 +45,6 @@ export class AppointmentsService {
     });
   }
 
-  // appointments.service.ts
   async findAllPaginated(page: number, limit: number) {
     const [appointments, total] = await this.prisma.$transaction([
       this.prisma.appointment.findMany({

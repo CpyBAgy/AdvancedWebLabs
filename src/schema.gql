@@ -2,13 +2,75 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Appointment {
-  date: String!
+type User {
   id: ID!
-  pet: Pet
+  name: String!
+  email: String!
+}
+
+type Pet {
+  id: ID!
+  name: String!
+  type: String!
+  ownerId: String!
+  owner: User
+}
+
+type Service {
+  id: ID!
+  name: String!
+  description: String
+  price: Float!
+}
+
+type Appointment {
+  id: ID!
+  date: String!
   petId: String!
-  service: Service
   serviceId: String!
+  pet: Pet
+  service: Service
+}
+
+type Query {
+  users: [User!]!
+  user(id: String!): User!
+  pets: [Pet!]!
+  pet(id: String!): Pet!
+  appointments: [Appointment!]!
+  appointment(id: String!): Appointment!
+  services: [Service!]!
+  service(id: String!): Service!
+}
+
+type Mutation {
+  AddUser(createUserInput: CreateUserInput!): User!
+  DeleteUser(id: String!): Boolean!
+  AddPet(createPetInput: CreatePetInput!): Pet!
+  UpdatePetInfo(input: UpdatePetInput!): Pet!
+  DeletePet(id: String!): Boolean!
+  MakeAppointment(createAppointmentInput: CreateAppointmentInput!): Appointment!
+  DeleteAppointment(id: String!): Boolean!
+  NewService(createServiceInput: CreateServiceInput!): Service!
+  DeleteService(id: String!): Boolean!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+}
+
+input CreatePetInput {
+  name: String!
+  type: String!
+  ownerId: String!
+}
+
+input UpdatePetInput {
+  name: String
+  type: String
+  ownerId: String
+  id: String!
 }
 
 input CreateAppointmentInput {
@@ -17,70 +79,8 @@ input CreateAppointmentInput {
   serviceId: String!
 }
 
-input CreatePetInput {
-  name: String!
-  ownerId: String!
-  type: String!
-}
-
 input CreateServiceInput {
+  name: String!
   description: String!
-  name: String!
   price: Float!
-}
-
-input CreateUserInput {
-  email: String!
-  name: String!
-}
-
-type Mutation {
-  AddPet(createPetInput: CreatePetInput!): Pet!
-  AddUser(createUserInput: CreateUserInput!): User!
-  DeleteAppointment(id: String!): Boolean!
-  DeletePet(id: String!): Boolean!
-  DeleteService(id: String!): Boolean!
-  DeleteUser(id: String!): Boolean!
-  MakeAppointment(createAppointmentInput: CreateAppointmentInput!): Appointment!
-  NewService(createServiceInput: CreateServiceInput!): Service!
-  UpdatePetInfo(input: UpdatePetInput!): Pet!
-}
-
-type Pet {
-  id: ID!
-  name: String!
-  owner: User
-  ownerId: String!
-  type: String!
-}
-
-type Query {
-  appointment(id: String!): Appointment!
-  appointments: [Appointment!]!
-  pet(id: String!): Pet!
-  pets: [Pet!]!
-  service(id: String!): Service!
-  services: [Service!]!
-  user(id: String!): User!
-  users: [User!]!
-}
-
-type Service {
-  description: String
-  id: ID!
-  name: String!
-  price: Float!
-}
-
-input UpdatePetInput {
-  id: String!
-  name: String
-  ownerId: String
-  type: String
-}
-
-type User {
-  email: String!
-  id: ID!
-  name: String!
 }

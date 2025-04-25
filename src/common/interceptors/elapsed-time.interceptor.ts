@@ -1,52 +1,52 @@
-/*import {
+import {
   Injectable,
   NestInterceptor,
   ExecutionContext,
   CallHandler,
 } from '@nestjs/common';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class ElapsedTimeInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const now = Date.now();
+    const start = process.hrtime();
+    const ctxType = context.getType<'http' | 'graphql'>();
 
-    const isGraphQL =
-      context.getType<'graphql' | 'http' | 'ws'>() === 'graphql';
-    const isHttp = context.getType<'graphql' | 'http' | 'ws'>() === 'http';
+    return next.handle().pipe(
+      map((data) => {
+        if (ctxType === 'http' && data && typeof data === 'object') {
+          const [sec, nano] = process.hrtime(start);
+          const elapsedMs = Math.round(sec * 1e3 + nano / 1e6);
+          return {
+            ...data,
+            elapsedTime: elapsedMs,
+          };
+        }
+        return data;
+      }),
+      tap({
+        next: () => {
+          const [sec, nano] = process.hrtime(start);
+          const elapsedMs = Math.round(sec * 1e3 + nano / 1e6);
+          console.log(`Request took ${elapsedMs}ms`);
 
-    if (isGraphQL) {
-      const gqlCtx = GqlExecutionContext.create(context).getContext();
-      gqlCtx.startTime = now;
-
-      return next.handle().pipe(
-        tap(() => {
-          const elapsedTime = Date.now() - now;
-          console.log(`⏱ GraphQL запрос выполнен за ${elapsedTime}мс`);
-          gqlCtx.res?.setHeader('X-Elapsed-Time', `${elapsedTime}ms`);
-        }),
-      );
-    }
-
-    if (isHttp) {
-      const ctx = context.switchToHttp();
-      const res = ctx.getResponse();
-      const req = ctx.getRequest();
-
-      return next.handle().pipe(
-        tap((data) => {
-          const elapsedTime = Date.now() - now;
-          res.setHeader('X-Elapsed-Time', `${elapsedTime}ms`);
-          res.locals.elapsedTime = `${elapsedTime}мс`;
-
-          console.log(
-            `HTTP [${req.method} ${req.url}] выполнен за ${elapsedTime}мс`,
-          );
-        }),
-      );
-    }
-
-    return next.handle();
+          if (ctxType === 'http') {
+            const ctx = context.switchToHttp();
+            const response = ctx.getResponse<Response>();
+            response.setHeader('X-Elapsed-Time', `${elapsedMs}ms`);
+          } else if (ctxType === 'graphql') {
+            const gqlCtx = GqlExecutionContext.create(context);
+            const { res } = gqlCtx.getContext<{
+              req: Request;
+              res: Response;
+            }>();
+            res.setHeader('X-Elapsed-Time', `${elapsedMs}ms`);
+          }
+        },
+      }),
+    );
   }
-}*/
+}

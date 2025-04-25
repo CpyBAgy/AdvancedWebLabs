@@ -2,96 +2,65 @@ import {
   Controller,
   Get,
   Post,
+  Param,
   Body,
   Patch,
-  Param,
   Delete,
   Query,
-  HttpCode,
-  HttpStatus,
+  UseInterceptors,
+  Header,
+  UploadedFile,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { CacheTTL } from '@nestjs/cache-manager';
+import { ETagInterceptor } from '../common/interceptors/etag.interceptor';
+import { LoggingCacheInterceptor } from '../common/interceptors/logging-cache.interceptor';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { CreatePetForUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBody,
-  ApiParam,
-  ApiQuery,
-} from '@nestjs/swagger';
 
 @ApiTags('users')
+@UseInterceptors(ETagInterceptor, LoggingCacheInterceptor)
 @Controller('api/users')
 export class UsersApiController {
-  constructor(private readonly usersService: UsersService) {}
-
-  @Post()
-  @ApiOperation({ summary: 'Создать нового пользователя' })
-  @ApiBody({ type: CreateUserDto })
-  @ApiResponse({ status: 201, description: 'Пользователь успешно создан' })
-  @ApiResponse({ status: 400, description: 'Неверный формат данных' })
-  create(@Body() dto: CreateUserDto) {
-    return this.usersService.create(dto);
-  }
+  constructor(
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get()
-  @ApiOperation({ summary: 'Получить список пользователей с пагинацией' })
-  @ApiQuery({ name: 'page', required: false, example: 1 })
-  @ApiQuery({ name: 'limit', required: false, example: 10 })
-  @ApiResponse({ status: 200, description: 'Список пользователей' })
+  @Header('Cache-Control', 'public, max-age=3600')
+  @CacheTTL(5)
+  @ApiOperation({ summary: 'Получить всех пользователей (с пагинацией)' })
+  @ApiResponse({ status: 200, description: 'Пользователи получены' })
   findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
-    return this.usersService.findAllPaginated(+page, +limit);
+    return this.usersService.findAllPaginated(page, limit);
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Получить одного пользователя по id' })
-  @ApiParam({ name: 'id', required: true })
+  @ApiOperation({ summary: 'Получить пользователя по ID' })
   @ApiResponse({ status: 200, description: 'Пользователь найден' })
-  @ApiResponse({ status: 404, description: 'Пользователь не найден' })
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
+  @Post()
+  @ApiOperation({ summary: 'Создать пользователя' })
+  @ApiResponse({ status: 201, description: 'Пользователь создан' })
+  create(@Body() dto: CreateUserDto) {
+    return this.usersService.create(dto);
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Обновить пользователя' })
-  @ApiParam({ name: 'id', required: true })
-  @ApiBody({ type: UpdateUserDto })
-  @ApiResponse({ status: 200, description: 'Пользователь обновлен' })
-  @ApiResponse({ status: 404, description: 'Пользователь не найден' })
+  @ApiResponse({ status: 200, description: 'Пользователь обновлён' })
   update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     return this.usersService.update(id, dto);
   }
-  @Get(':id/pets')
-  @ApiOperation({ summary: 'Получить список животных пользователя по id' })
-  @ApiParam({ name: 'id', required: true, description: 'UUID пользователя' })
-  @ApiResponse({ status: 200, description: 'Список животных пользователя' })
-  @ApiResponse({ status: 404, description: 'Пользователь не найден' })
-  getUserPets(@Param('id') id: string) {
-    return this.usersService.findPetsByUserId(id);
-  }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Удалить пользователя' })
-  @ApiParam({ name: 'id', required: true })
-  @ApiResponse({ status: 204, description: 'Пользователь удалён' })
-  @ApiResponse({ status: 404, description: 'Пользователь не найден' })
+  @ApiResponse({ status: 200, description: 'Пользователь удалён' })
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
-  }
-  @Post(':id/pets')
-  @ApiOperation({ summary: 'Создать животное для пользователя' })
-  @ApiParam({ name: 'id', required: true, description: 'UUID пользователя' })
-  @ApiBody({ type: CreatePetForUserDto })
-  @ApiResponse({ status: 201, description: 'Животное успешно создано' })
-  @ApiResponse({ status: 404, description: 'Пользователь не найден' })
-  createPetForUser(
-    @Param('id') userId: string,
-    @Body() dto: CreatePetForUserDto,
-  ) {
-    return this.usersService.createPetForUser(userId, dto);
   }
 }

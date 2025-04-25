@@ -5,7 +5,6 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { GqlArgumentsHost } from '@nestjs/graphql';
 import { Request, Response } from 'express';
 
 @Catch()
@@ -17,6 +16,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
       const ctx = host.switchToHttp();
       const response = ctx.getResponse<Response>();
       const request = ctx.getRequest<Request>();
+
+      if (response.headersSent) {
+        return;
+      }
 
       const status =
         exception instanceof HttpException

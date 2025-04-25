@@ -32,7 +32,7 @@ export class PetsController {
     return this.petsService.create(data);
   }
   @Post('update')
-  @Redirect('/addpet') // потом мы допишем redirect с userId
+  @Redirect('/addpet')
   async update(
     @Body() data: { id: string; name: string; type: string; ownerId: string },
   ) {
