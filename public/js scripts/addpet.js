@@ -4,9 +4,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const emptyPets = document.getElementById("emptyPets");
   const messageElement = document.getElementById("message");
 
+  // Получаем userId из URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get('userId');
+
   async function loadPets() {
     try {
-      const response = await fetch(`/pets?ownerId=${userId}`);
+      const response = await fetch(`/pets/owner/${userId}`);
       const pets = await response.json();
 
       petsList.innerHTML = "";
@@ -100,6 +104,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const formData = new FormData(form);
     const jsonData = Object.fromEntries(formData.entries());
 
+    // Добавляем ID пользователя из URL
     jsonData.ownerId = userId;
 
     try {
@@ -146,12 +151,20 @@ document.addEventListener("DOMContentLoaded", async () => {
               emptyPets.style.display = 'block';
             }
           } else {
-            showMessage("Ошибка при удалении услуги", "error");
+            showMessage("Ошибка при удалении питомца", "error");
           }
+        } catch (error) {
+          console.error("Ошибка:", error);
+          showMessage("Ошибка при удалении питомца", "error");
         }
       }
-    });
-
-    // Загружаем услуги при загрузке страницы
-    await loadServices();
+    }
   });
+
+  // Загружаем питомцев при загрузке страницы
+  if (userId) {
+    await loadPets();
+  } else {
+    showMessage("Ошибка: пользователь не авторизован", "error");
+  }
+});
